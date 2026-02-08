@@ -1,5 +1,5 @@
 import React from "react";
-import { Mspaint, Pbrush1, Notepad } from "@react95/icons";
+import { Mspaint, Pbrush1, Notepad, Wangimg130 } from "@react95/icons";
 
 export interface DesktopIconConfig {
   id: string;
@@ -16,14 +16,14 @@ export const desktopIcons: DesktopIconConfig[] = [
     label: "MS Paint Art",
     windowTitle: "MS Paint Art",
     componentKey: "gallery",
-    icon: React.createElement(Mspaint, { variant: "32x32_4" }),
+    icon: React.createElement(Pbrush1, { variant: "32x32_4" }),
   },
   {
     id: "ipad",
     label: "iPad Art",
     windowTitle: "iPad Art",
     componentKey: "gallery",
-    icon: React.createElement(Pbrush1, { variant: "32x32_4" }),
+    icon: React.createElement(Wangimg130, { variant: "32x32_4" }),
   },
   {
     id: "about",
