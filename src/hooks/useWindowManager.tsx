@@ -14,6 +14,8 @@ export interface WindowState {
   size: { width: number; height: number };
   zIndex: number;
   isMinimized: boolean;
+  isMaximized: boolean;
+  preMaximizeRect?: { position: { x: number; y: number }; size: { width: number; height: number } };
   props?: Record<string, unknown>;
 }
 
@@ -35,7 +37,8 @@ type Action =
   | {
     type: "MOVE_WINDOW";
     payload: { id: string; position: { x: number; y: number } };
-  };
+  }
+  | { type: "MAXIMIZE_WINDOW"; payload: string };
 
 interface State {
   windows: WindowState[];
@@ -76,6 +79,7 @@ function reducer(state: State, action: Action): State {
         size: action.payload.size ?? defaultSize,
         zIndex: state.nextZIndex,
         isMinimized: false,
+        isMaximized: false,
         props: action.payload.props,
       };
       return {
@@ -113,6 +117,32 @@ function reducer(state: State, action: Action): State {
         ),
         nextZIndex: state.nextZIndex + 1,
       };
+    case "MAXIMIZE_WINDOW":
+      return {
+        ...state,
+        windows: state.windows.map((w) => {
+          if (w.id !== action.payload) return w;
+          if (w.isMaximized) {
+            // Restore to pre-maximize rect
+            return {
+              ...w,
+              isMaximized: false,
+              position: w.preMaximizeRect?.position ?? w.position,
+              size: w.preMaximizeRect?.size ?? w.size,
+              preMaximizeRect: undefined,
+              zIndex: state.nextZIndex,
+            };
+          }
+          // Maximize: save current rect and expand
+          return {
+            ...w,
+            isMaximized: true,
+            preMaximizeRect: { position: w.position, size: w.size },
+            zIndex: state.nextZIndex,
+          };
+        }),
+        nextZIndex: state.nextZIndex + 1,
+      };
     case "MOVE_WINDOW":
       return {
         ...state,
@@ -140,6 +170,7 @@ interface WindowManagerContextValue {
   focusWindow: (id: string) => void;
   minimizeWindow: (id: string) => void;
   restoreWindow: (id: string) => void;
+  maximizeWindow: (id: string) => void;
   moveWindow: (id: string, position: { x: number; y: number }) => void;
 }
 
@@ -182,6 +213,10 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
     dispatch({ type: "RESTORE_WINDOW", payload: id });
   }, []);
 
+  const maximizeWindow = useCallback((id: string) => {
+    dispatch({ type: "MAXIMIZE_WINDOW", payload: id });
+  }, []);
+
   const moveWindow = useCallback(
     (id: string, position: { x: number; y: number }) => {
       dispatch({ type: "MOVE_WINDOW", payload: { id, position } });
@@ -198,6 +233,7 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
         focusWindow,
         minimizeWindow,
         restoreWindow,
+        maximizeWindow,
         moveWindow,
       }}
     >

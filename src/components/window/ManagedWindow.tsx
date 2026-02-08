@@ -11,6 +11,7 @@ interface ManagedWindowProps {
 
 const StyledWindow = styled(Window) <{
   $isMobile: boolean;
+  $isMaximized: boolean;
   $x: number;
   $y: number;
   $width: number;
@@ -20,7 +21,7 @@ const StyledWindow = styled(Window) <{
   position: ${({ $isMobile }) => ($isMobile ? "fixed" : "absolute")};
   display: flex;
   flex-direction: column;
-  ${({ $isMobile, $x, $y, $width, $height }) =>
+  ${({ $isMobile, $isMaximized, $x, $y, $width, $height }) =>
     $isMobile
       ? `
     top: 0;
@@ -30,7 +31,18 @@ const StyledWindow = styled(Window) <{
     max-width: 100vw;
     border: none;
   `
-      : `
+      : $isMaximized
+        ? `
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: calc(100vh - 48px);
+    max-width: 100vw;
+    max-height: none;
+    resize: none;
+    overflow: hidden;
+  `
+        : `
     top: ${$y}px;
     left: ${$x}px;
     width: ${$width}px;
@@ -67,6 +79,7 @@ const HeaderTitle = styled.span`
 
 const HeaderButtons = styled.div`
   display: flex;
+  align-items: center;
   gap: 2px;
   margin-left: 4px;
 `;
@@ -80,7 +93,7 @@ const ContentWrapper = styled(WindowContent)`
 `;
 
 export function ManagedWindow({ windowState, children }: ManagedWindowProps) {
-  const { closeWindow, focusWindow, minimizeWindow, moveWindow } =
+  const { closeWindow, focusWindow, minimizeWindow, maximizeWindow, moveWindow } =
     useWindowManager();
   const isMobile = useIsMobile();
 
@@ -96,10 +109,15 @@ export function ManagedWindow({ windowState, children }: ManagedWindowProps) {
     minimizeWindow(windowState.id);
   }, [minimizeWindow, windowState.id]);
 
+  const handleMaximize = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    e.currentTarget.blur();
+    maximizeWindow(windowState.id);
+  }, [maximizeWindow, windowState.id]);
+
   // Drag handling for desktop
   const handleHeaderPointerDown = useCallback(
     (e: React.PointerEvent) => {
-      if (isMobile) return;
+      if (isMobile || windowState.isMaximized) return;
       e.preventDefault();
       focusWindow(windowState.id);
 
@@ -121,7 +139,7 @@ export function ManagedWindow({ windowState, children }: ManagedWindowProps) {
       document.addEventListener("pointermove", handlePointerMove);
       document.addEventListener("pointerup", handlePointerUp);
     },
-    [isMobile, windowState.id, windowState.position, focusWindow, moveWindow],
+    [isMobile, windowState.id, windowState.isMaximized, windowState.position, focusWindow, moveWindow],
   );
 
   if (windowState.isMinimized) return null;
@@ -129,6 +147,7 @@ export function ManagedWindow({ windowState, children }: ManagedWindowProps) {
   return (
     <StyledWindow
       $isMobile={isMobile}
+      $isMaximized={windowState.isMaximized}
       $x={windowState.position.x}
       $y={windowState.position.y}
       $width={windowState.size.width}
@@ -149,7 +168,10 @@ export function ManagedWindow({ windowState, children }: ManagedWindowProps) {
           ) : (
             <>
               <Button size="sm" square onClick={handleMinimize}>
-                <span style={{ fontWeight: "bold" }}>_</span>
+                <span style={{ fontWeight: "bold", fontSize: "18px", lineHeight: 1 }}>&#x2013;</span>
+              </Button>
+              <Button size="sm" square onClick={handleMaximize}>
+                <span style={{ fontWeight: "bold", fontSize: "14px", lineHeight: 1 }}>{windowState.isMaximized ? "❐" : "▣"}</span>
               </Button>
               <Button size="sm" square onClick={handleClose}>
                 <span style={{ fontWeight: "bold" }}>✕</span>
