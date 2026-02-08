@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { MenuList, MenuListItem, Separator } from "react95";
+import { MenuList, MenuListItem as MenuListItemBase, Separator } from "react95";
 import styled from "styled-components";
 import { useWindowManager } from "../../hooks/useWindowManager";
 
@@ -12,7 +12,7 @@ const MenuWrapper = styled.div`
   bottom: 100%;
   left: 0;
   z-index: 10000;
-  width: 220px;
+  width: 250px;
   margin-bottom: 2px;
 `;
 
@@ -21,31 +21,38 @@ const MenuBanner = styled.div`
   left: 0;
   top: 0;
   bottom: 0;
-  width: 28px;
+  width: 32px;
   background: linear-gradient(to top, #ff69b4, #ff1493);
   display: flex;
   align-items: flex-end;
-  padding-bottom: 8px;
+  padding-bottom: 10px;
   writing-mode: vertical-rl;
   text-orientation: mixed;
   color: white;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 16px;
   letter-spacing: 2px;
   z-index: 1;
 `;
 
 const MenuContent = styled(MenuList)`
-  padding-left: 28px;
+  padding-left: 32px;
   width: 100%;
+  font-size: 14px;
+`;
+
+const StyledMenuItem = styled(MenuListItemBase)`
+  padding: 8px 12px;
+  font-size: 14px;
+  min-height: 36px;
 `;
 
 const MenuIcon = styled.span`
   display: inline-block;
-  width: 24px;
+  width: 28px;
   text-align: center;
-  margin-right: 8px;
-  font-size: 16px;
+  margin-right: 10px;
+  font-size: 20px;
 `;
 
 export function StartMenu({ onClose }: StartMenuProps) {
@@ -63,7 +70,7 @@ export function StartMenu({ onClose }: StartMenuProps) {
     <MenuWrapper>
       <MenuBanner>zapychan95</MenuBanner>
       <MenuContent>
-        <MenuListItem
+        <StyledMenuItem
           onClick={() =>
             handleOpen("paintings", "My Paintings", "gallery", {
               galleryType: "paintings",
@@ -72,8 +79,8 @@ export function StartMenu({ onClose }: StartMenuProps) {
         >
           <MenuIcon>🎨</MenuIcon>
           My Paintings
-        </MenuListItem>
-        <MenuListItem
+        </StyledMenuItem>
+        <StyledMenuItem
           onClick={() =>
             handleOpen("digital", "Digital Works", "gallery", {
               galleryType: "digital",
@@ -82,37 +89,37 @@ export function StartMenu({ onClose }: StartMenuProps) {
         >
           <MenuIcon>💻</MenuIcon>
           Digital Works
-        </MenuListItem>
+        </StyledMenuItem>
         <Separator />
-        <MenuListItem
+        <StyledMenuItem
           onClick={() => handleOpen("about", "About Me", "about")}
         >
           <MenuIcon>📝</MenuIcon>
           About Me
-        </MenuListItem>
-        <MenuListItem
+        </StyledMenuItem>
+        <StyledMenuItem
           onClick={() => handleOpen("guestbook", "Guestbook", "guestbook")}
         >
           <MenuIcon>📖</MenuIcon>
           Guestbook
-        </MenuListItem>
-        <MenuListItem
+        </StyledMenuItem>
+        <StyledMenuItem
           onClick={() => handleOpen("links", "Cool Links", "links")}
         >
           <MenuIcon>🔗</MenuIcon>
           Cool Links
-        </MenuListItem>
-        <MenuListItem
+        </StyledMenuItem>
+        <StyledMenuItem
           onClick={() => handleOpen("contact", "Contact Me", "contact")}
         >
           <MenuIcon>💌</MenuIcon>
           Contact Me
-        </MenuListItem>
+        </StyledMenuItem>
         <Separator />
-        <MenuListItem disabled>
+        <StyledMenuItem disabled>
           <MenuIcon>🌸</MenuIcon>
           Shut Down...
-        </MenuListItem>
+        </StyledMenuItem>
       </MenuContent>
     </MenuWrapper>
   );

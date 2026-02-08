@@ -17,14 +17,16 @@ const TaskbarToolbar = styled(Toolbar)`
   display: flex;
   align-items: center;
   gap: 4px;
-  padding: 2px 4px;
+  padding: 4px 6px;
   position: relative;
+  min-height: 40px;
 `;
 
 const StartButton = styled(Button)`
   font-weight: bold;
-  min-width: 60px;
-  font-size: 12px;
+  min-width: 80px;
+  font-size: 15px;
+  padding: 4px 10px;
 `;
 
 const WindowButtons = styled.div`
@@ -40,21 +42,22 @@ const WindowButtons = styled.div`
 `;
 
 const WindowButton = styled(Button)<{ $isActive: boolean }>`
-  font-size: 11px;
-  max-width: 160px;
-  min-width: 60px;
+  font-size: 13px;
+  max-width: 170px;
+  min-width: 70px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  padding: 3px 8px;
   opacity: ${({ $isActive }) => ($isActive ? 1 : 0.8)};
 `;
 
 const Clock = styled.div`
-  font-size: 11px;
-  padding: 4px 8px;
+  font-size: 13px;
+  padding: 4px 10px;
   border-style: inset;
   border-width: 2px;
-  min-width: 60px;
+  min-width: 68px;
   text-align: center;
   flex-shrink: 0;
 `;
@@ -69,7 +72,7 @@ function useTime() {
 }
 
 export function Taskbar() {
-  const { windows, focusWindow, minimizeWindow, restoreWindow } =
+  const { windows, minimizeWindow, restoreWindow } =
     useWindowManager();
   const [startOpen, setStartOpen] = useState(false);
   const time = useTime();
