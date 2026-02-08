@@ -1,10 +1,12 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import styled from "styled-components";
 import { Toolbar, Button } from "react95";
 import { paintings } from "../../data/paintings";
 import { digitalWorks } from "../../data/digitalWorks";
 import { GalleryGrid } from "./GalleryGrid";
 import { useEvilMode } from "../../hooks/useEvilMode";
+
+export type SortOrder = "oldest" | "newest";
 
 interface GalleryWindowProps {
   windowId: string;
@@ -43,6 +45,7 @@ const Title = styled.div`
 export function GalleryWindow({ windowId, props }: GalleryWindowProps) {
   const galleryType = (props?.galleryType as string) || "paintings";
   const { isEvil } = useEvilMode();
+  const [sortOrder, setSortOrder] = useState<SortOrder>("oldest");
   const artworks = useMemo(
     () => (galleryType === "paintings" ? paintings : digitalWorks),
     [galleryType],
@@ -52,21 +55,33 @@ export function GalleryWindow({ windowId, props }: GalleryWindowProps) {
   const title =
     galleryType === "paintings" ? "🎨 My Paintings" : "💻 Digital Works";
 
+  const toggleSort = () =>
+    setSortOrder((prev) => (prev === "oldest" ? "newest" : "oldest"));
+
   return (
     <Wrapper>
       <GalleryToolbar>
         <Button variant="thin" size="sm" disabled>
           View
         </Button>
-        <Button variant="thin" size="sm" disabled>
-          Sort
+        <Button
+          variant="thin"
+          size="sm"
+          active={sortOrder === "newest"}
+          onClick={toggleSort}
+        >
+          Sort: {sortOrder === "oldest" ? "Oldest" : "Newest"}
         </Button>
         <Title style={{ flex: 1 }}>
           {title} ({visibleCount} works)
         </Title>
       </GalleryToolbar>
       <ContentArea>
-        <GalleryGrid artworks={artworks} windowId={windowId} />
+        <GalleryGrid
+          artworks={artworks}
+          windowId={windowId}
+          sortOrder={sortOrder}
+        />
       </ContentArea>
     </Wrapper>
   );

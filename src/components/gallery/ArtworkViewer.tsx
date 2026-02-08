@@ -101,7 +101,7 @@ export function ArtworkViewer({ props }: ArtworkViewerProps) {
       <InfoBox variant="well">
         <Title>{artwork.title}</Title>
         <MetaRow>
-          <strong>Year:</strong> {artwork.year}
+          <strong>Date:</strong> {artwork.date || artwork.year}
         </MetaRow>
         <MetaRow>
           <strong>Medium:</strong> {artwork.medium}

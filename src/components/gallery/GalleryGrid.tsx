@@ -2,6 +2,7 @@ import { useState, useMemo, useCallback } from "react";
 import styled from "styled-components";
 import { Button } from "react95";
 import type { Artwork } from "../../data/paintings";
+import type { SortOrder } from "./GalleryWindow";
 import { useWindowManager } from "../../hooks/useWindowManager";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import { useEvilMode } from "../../hooks/useEvilMode";
@@ -9,6 +10,7 @@ import { useEvilMode } from "../../hooks/useEvilMode";
 interface GalleryGridProps {
   artworks: Artwork[];
   windowId: string;
+  sortOrder: SortOrder;
 }
 
 const PAGE_SIZE = 20;
@@ -54,8 +56,8 @@ const ThumbImage = styled.div`
 `;
 
 const ThumbTitle = styled.div`
-  font-size: 11px;
-  margin-top: 4px;
+  font-size: 14px;
+  margin-top: 6px;
   color: #8b0045;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -63,7 +65,7 @@ const ThumbTitle = styled.div`
 `;
 
 const ThumbYear = styled.div`
-  font-size: 10px;
+  font-size: 12px;
   color: #d4578a;
 `;
 
@@ -84,17 +86,32 @@ const EmptyState = styled.div`
 // Placeholder emoji for missing images
 const placeholderEmojis = ["🎨", "🖼️", "✨", "🌸", "💖", "🦋"];
 
-export function GalleryGrid({ artworks, windowId }: GalleryGridProps) {
+function getDateKey(a: Artwork): string {
+  return a.date || `${a.year}-01-01`;
+}
+
+export function GalleryGrid({
+  artworks,
+  windowId,
+  sortOrder,
+}: GalleryGridProps) {
   const [page, setPage] = useState(1);
   const { openWindow } = useWindowManager();
   const isMobile = useIsMobile();
   const { isEvil } = useEvilMode();
 
-  // Show evil-only works only in evil mode
-  const visibleWorks = useMemo(
-    () => artworks.filter((a) => isEvil || !a.evilOnly),
-    [artworks, isEvil],
-  );
+  // Show evil-only works only in evil mode, then sort by date
+  const visibleWorks = useMemo(() => {
+    const filtered = artworks.filter((a) => isEvil || !a.evilOnly);
+    const sorted = [...filtered].sort((a, b) => {
+      const da = getDateKey(a);
+      const db = getDateKey(b);
+      return sortOrder === "oldest"
+        ? da.localeCompare(db)
+        : db.localeCompare(da);
+    });
+    return sorted;
+  }, [artworks, isEvil, sortOrder]);
 
   const displayedWorks = useMemo(
     () => visibleWorks.slice(0, page * PAGE_SIZE),
@@ -144,7 +161,7 @@ export function GalleryGrid({ artworks, windowId }: GalleryGridProps) {
             />
           </ThumbImage>
           <ThumbTitle>{artwork.title}</ThumbTitle>
-          <ThumbYear>{artwork.year}</ThumbYear>
+          <ThumbYear>{artwork.date || artwork.year}</ThumbYear>
         </ThumbCard>
       ))}
       {hasMore && (
