@@ -126,6 +126,14 @@ export function StartMenu({ onClose }: StartMenuProps) {
           <MenuIcon><Pbrush1 variant="32x32_4" width={16} height={16} /></MenuIcon>
           {isEvil ? "i̸P̷a̵d̶ A̵r̸t̷" : "iPad Art"}
         </StyledMenuItem>
+        <StyledMenuItem
+          onClick={() =>
+            handleOpen("paintApp", "untitled - Paint", "mspaintApp", undefined, { width: 720, height: 560 })
+          }
+        >
+          <MenuIcon><Mspaint variant="16x16_4" /></MenuIcon>
+          Paint
+        </StyledMenuItem>
         <Separator />
         <StyledMenuItem
           onClick={() => handleOpen("about", isEvil ? "A̷b̸o̵u̶t̸ M̷e̵" : "About Me", "about", undefined, { width: 480, height: 520 })}

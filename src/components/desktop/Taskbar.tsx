@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect, useRef } from "react";
-import { AppBar, Toolbar, Button } from "react95";
+import { AppBar, Toolbar, Button, Frame } from "react95";
 import styled from "styled-components";
+import { Progman1, Mmsys110, Mail } from "@react95/icons";
 import { useWindowManager } from "../../hooks/useWindowManager";
 import { useEvilMode } from "../../hooks/useEvilMode";
 import { useIsMobile } from "../../hooks/useIsMobile";
@@ -64,7 +65,7 @@ const SystemTray = styled.div`
   align-self: stretch;
 `;
 
-const TrayCell = styled.span<{ $clickable?: boolean }>`
+const TrayCell = styled(Frame)<{ $clickable?: boolean }>`
   font-size: 13px;
   cursor: ${({ $clickable }) => ($clickable ? "pointer" : "default")};
   user-select: none;
@@ -73,8 +74,6 @@ const TrayCell = styled.span<{ $clickable?: boolean }>`
   justify-content: center;
   position: relative;
   padding: 0 8px;
-  border-style: inset;
-  border-width: 2px;
   white-space: nowrap;
 
   &:hover {
@@ -84,12 +83,10 @@ const TrayCell = styled.span<{ $clickable?: boolean }>`
 
 /* ── Volume popup ── */
 
-const VolumePopup = styled.div`
+const VolumePopup = styled(Frame)`
   position: absolute;
   bottom: 30px;
   right: -10px;
-  background: ${({ theme }) => theme.material};
-  border: 2px outset ${({ theme }) => theme.borderLight};
   padding: 14px 10px;
   display: flex;
   flex-direction: column;
@@ -97,7 +94,6 @@ const VolumePopup = styled.div`
   gap: 6px;
   z-index: 10001;
   min-width: 44px;
-  box-shadow: 2px 2px 0 ${({ theme }) => theme.borderDarkest};
 `;
 
 const VolumeSliderTrack = styled.div`
@@ -200,7 +196,7 @@ export function Taskbar() {
   const time = useTime();
   const weather = useWeather();
   const taskbarRef = useRef<HTMLDivElement>(null);
-  const volumeRef = useRef<HTMLSpanElement>(null);
+  const volumeRef = useRef<HTMLDivElement>(null);
 
   // Close popups on outside click
   useEffect(() => {
@@ -246,14 +242,13 @@ export function Taskbar() {
     [restoreWindow, minimizeWindow],
   );
 
-  const volumeIcon =
-    volume === 0 ? "🔇" : volume < 33 ? "🔈" : volume < 66 ? "🔉" : "🔊";
+  const volumeIcon = <Mmsys110 variant="16x16_4" />;
 
   return (
     <TaskbarWrapper ref={taskbarRef}>
       <TaskbarToolbar>
         <StartButton active={startOpen} onClick={toggleStart}>
-          {isEvil ? "💀 Start" : "💖 Start"}
+          <Progman1 variant="32x32_4" width={16} height={16} style={{ marginRight: 4 }} /> Start
         </StartButton>
 
         <WindowButtons>
@@ -273,6 +268,7 @@ export function Taskbar() {
         <SystemTray>
           {/* Volume */}
           <TrayCell
+            variant="status"
             ref={volumeRef}
             $clickable
             title={isEvil ? "SCREAMS" : `Volume: ${volume}%`}
@@ -281,9 +277,9 @@ export function Taskbar() {
               setStartOpen(false);
             }}
           >
-            {isEvil ? "🔇" : volumeIcon}
+            {volumeIcon}
             {volumeOpen && (
-              <VolumePopup onClick={(e) => e.stopPropagation()}>
+              <VolumePopup variant="window" shadow onClick={(e) => e.stopPropagation()}>
                 <VolumeLabel>
                   {isEvil ? "???" : `${volume}%`}
                 </VolumeLabel>
@@ -297,7 +293,7 @@ export function Taskbar() {
                   />
                 </VolumeSliderTrack>
                 <div style={{ fontSize: 13 }}>
-                  {isEvil ? "🔇" : volumeIcon}
+                  {volumeIcon}
                 </div>
               </VolumePopup>
             )}
@@ -306,24 +302,25 @@ export function Taskbar() {
           {/* Mail indicator */}
           {!isMobile && (
             <TrayCell
+              variant="status"
               title={
                 isEvil ? "666 unread messages" : "0 unread messages"
               }
             >
-              {isEvil ? "📧" : "✉️"}
+              <Mail variant="16x16_4" />
             </TrayCell>
           )}
 
           {/* Weather (NYC) */}
           {weather && (
-            <TrayCell title={`NYC: ${weather.temp}°F`}>
+            <TrayCell variant="status" title={`NYC: ${weather.temp}°F`}>
               {weatherEmoji(weather.code, isEvil)}{" "}
               {isEvil ? "??°" : `${weather.temp}°`}
             </TrayCell>
           )}
 
           {/* Clock */}
-          <TrayCell>{time}</TrayCell>
+          <TrayCell variant="status">{time}</TrayCell>
         </SystemTray>
       </TaskbarToolbar>
 

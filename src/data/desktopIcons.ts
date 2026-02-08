@@ -33,4 +33,12 @@ export const desktopIcons: DesktopIconConfig[] = [
     icon: React.createElement(Notepad, { variant: "32x32_4" }),
     size: { width: 480, height: 520 },
   },
+  {
+    id: "paintApp",
+    label: "Paint",
+    windowTitle: "untitled - Paint",
+    componentKey: "mspaintApp",
+    icon: React.createElement(Mspaint, { variant: "32x32_4" }),
+    size: { width: 720, height: 560 },
+  },
 ];

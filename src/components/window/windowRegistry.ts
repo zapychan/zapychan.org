@@ -34,4 +34,9 @@ export const windowRegistry: Record<
       default: m.SecretVideosWindow,
     })),
   ),
+  mspaintApp: lazy(() =>
+    import("../paint/MSPaintWindow").then((m) => ({
+      default: m.MSPaintWindow,
+    })),
+  ),
 };

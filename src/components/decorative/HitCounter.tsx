@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { Frame } from "react95";
 
 const CounterWrapper = styled.div`
   display: flex;
@@ -14,8 +15,10 @@ const Digits = styled.div`
   gap: 1px;
 `;
 
-const Digit = styled.span`
-  display: inline-block;
+const Digit = styled(Frame)`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 14px;
   height: 20px;
   background: #1a0008;
@@ -25,7 +28,6 @@ const Digit = styled.span`
   font-weight: bold;
   text-align: center;
   line-height: 20px;
-  border: 1px inset #d4578a;
 `;
 
 interface HitCounterProps {
@@ -49,7 +51,7 @@ export function HitCounter({ isEvil }: HitCounterProps) {
       <span>{isEvil ? "souls collected:" : "visitors:"}</span>
       <Digits>
         {digits.split("").map((d, i) => (
-          <Digit key={i} style={isEvil ? { color: "#cc3366" } : undefined}>
+          <Digit variant="field" key={i} style={isEvil ? { color: "#cc3366" } : undefined}>
             {d}
           </Digit>
         ))}
