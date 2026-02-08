@@ -117,13 +117,23 @@ export function StartMenu({ onClose }: StartMenuProps) {
         </StyledMenuItem>
         <StyledMenuItem
           onClick={() =>
-            handleOpen("digital", isEvil ? "D̷i̸g̶i̵t̸a̵l̶ W̸o̵r̷k̸s̵" : "Digital Works", "gallery", {
-              galleryType: "digital",
+            handleOpen("mspaint", isEvil ? "M̸S̷ P̵a̶i̸n̷t̸" : "MS Paint", "gallery", {
+              galleryType: "mspaint",
             })
           }
         >
           <MenuIcon>💻</MenuIcon>
-          {isEvil ? "D̷i̸g̶i̵t̸a̵l̶ W̸o̵r̷k̸s̵" : "Digital Works"}
+          {isEvil ? "M̸S̷ P̵a̶i̸n̷t̸" : "MS Paint"}
+        </StyledMenuItem>
+        <StyledMenuItem
+          onClick={() =>
+            handleOpen("ipad", isEvil ? "i̸P̷a̵d̶ A̵r̸t̷" : "iPad Art", "gallery", {
+              galleryType: "ipad",
+            })
+          }
+        >
+          <MenuIcon>🎨</MenuIcon>
+          {isEvil ? "i̸P̷a̵d̶ A̵r̸t̷" : "iPad Art"}
         </StyledMenuItem>
         <Separator />
         <StyledMenuItem

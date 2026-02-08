@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Toolbar, Button } from "react95";
 import { paintings } from "../../data/paintings";
 import { digitalWorks } from "../../data/digitalWorks";
+import { ipadWorks } from "../../data/ipadWorks";
 import { GalleryGrid } from "./GalleryGrid";
 import { useEvilMode } from "../../hooks/useEvilMode";
 
@@ -35,7 +36,7 @@ const ContentArea = styled.div`
 `;
 
 const Title = styled.div`
-  text-align: center;
+  text-align: right;
   color: #ff1493;
   font-size: 11px;
   padding: 4px 0;
@@ -46,14 +47,19 @@ export function GalleryWindow({ windowId, props }: GalleryWindowProps) {
   const galleryType = (props?.galleryType as string) || "paintings";
   const { isEvil } = useEvilMode();
   const [sortOrder, setSortOrder] = useState<SortOrder>("oldest");
-  const artworks = useMemo(
-    () => (galleryType === "paintings" ? paintings : digitalWorks),
-    [galleryType],
-  );
+  const artworks = useMemo(() => {
+    if (galleryType === "paintings") return paintings;
+    if (galleryType === "ipad") return ipadWorks;
+    return digitalWorks;
+  }, [galleryType]);
 
   const visibleCount = artworks.filter((a) => isEvil || !a.evilOnly).length;
-  const title =
-    galleryType === "paintings" ? "🎨 My Paintings" : "💻 Digital Works";
+  const titleMap: Record<string, string> = {
+    paintings: "🎨 My Paintings",
+    mspaint: "💻 MS Paint",
+    ipad: "🎨 iPad Art",
+  };
+  const title = titleMap[galleryType] ?? "🎨 Gallery";
 
   const toggleSort = () =>
     setSortOrder((prev) => (prev === "oldest" ? "newest" : "oldest"));

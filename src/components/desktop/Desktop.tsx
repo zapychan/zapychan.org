@@ -105,7 +105,7 @@ export function Desktop() {
     (id: string, title: string, componentKey: string) => {
       const props: Record<string, unknown> = {};
       if (componentKey === "gallery") {
-        props.galleryType = id === "paintings" ? "paintings" : "digital";
+        props.galleryType = id;
       }
       openWindow(id, title, componentKey, props);
     },

@@ -15,11 +15,18 @@ export const desktopIcons: DesktopIconConfig[] = [
     icon: "🎨",
   },
   {
-    id: "digital",
-    label: "Digital Works",
-    windowTitle: "Digital Works",
+    id: "mspaint",
+    label: "MS Paint",
+    windowTitle: "MS Paint",
     componentKey: "gallery",
     icon: "💻",
+  },
+  {
+    id: "ipad",
+    label: "iPad Art",
+    windowTitle: "iPad Art",
+    componentKey: "gallery",
+    icon: "🎨",
   },
   {
     id: "about",
