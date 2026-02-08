@@ -8,8 +8,7 @@ const publicDir = path.resolve(import.meta.dir, "../public");
 
 const server = serve({
   routes: {
-    // Serve index.html for all unmatched routes
-    "/*": index,
+    "/": index,
 
     "/api/hits": {
       GET() {
@@ -17,19 +16,21 @@ const server = serve({
         return Response.json({ count: hitCount });
       },
     },
-  },
 
-  async fetch(req) {
-    const url = new URL(req.url);
-    // Serve static files from public directory (gallery images)
-    if (url.pathname.startsWith("/gallery/")) {
-      const filePath = path.join(publicDir, url.pathname);
+    "/gallery/*": async (req) => {
+      const url = new URL(req.url);
+      const filePath = path.join(publicDir, decodeURIComponent(url.pathname));
       const file = Bun.file(filePath);
       if (await file.exists()) {
         return new Response(file);
       }
-    }
-    return new Response("Not found", { status: 404 });
+      return new Response("Not found", { status: 404 });
+    },
+  },
+
+  // Fallback: serve index.html for client-side routing
+  fetch() {
+    return new Response(Bun.file(path.join(import.meta.dir, "index.html")));
   },
 
   development: process.env.NODE_ENV !== "production" && {

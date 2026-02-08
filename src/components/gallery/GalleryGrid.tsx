@@ -21,11 +21,13 @@ const Grid = styled.div<{ $isMobile: boolean }>`
   );
   gap: 12px;
   padding: 4px;
+  align-items: start;
 `;
 
 const ThumbCard = styled.div`
   cursor: pointer;
   text-align: center;
+  min-width: 0;
   transition: transform 0.1s;
 
   &:hover {
