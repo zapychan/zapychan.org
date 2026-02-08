@@ -31,10 +31,16 @@ const ImageRow = styled.div`
   display: flex;
   gap: 12px;
   justify-content: center;
-  align-items: stretch;
-  flex-wrap: wrap;
+  align-items: center;
   margin: 12px 0;
   height: 200px;
+
+  @media (max-width: 768px) {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    height: auto;
+    padding: 8px 16px;
+  }
 `;
 
 const AboutImage = styled.img`
@@ -42,6 +48,11 @@ const AboutImage = styled.img`
   width: auto;
   border: 2px solid #ff69b4;
   object-fit: cover;
+
+  @media (max-width: 768px) {
+    flex-shrink: 0;
+    height: 16vh;
+  }
 `;
 
 export function AboutWindow() {
