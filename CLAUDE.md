@@ -1,111 +1,84 @@
----
-description: Use Bun instead of Node.js, npm, pnpm, or vite.
-globs: "*.ts, *.tsx, *.html, *.css, *.js, *.jsx, package.json"
-alwaysApply: false
----
-
 Default to using Bun instead of Node.js.
 
 - Use `bun <file>` instead of `node <file>` or `ts-node <file>`
 - Use `bun test` instead of `jest` or `vitest`
-- Use `bun build <file.html|file.ts|file.css>` instead of `webpack` or `esbuild`
 - Use `bun install` instead of `npm install` or `yarn install` or `pnpm install`
-- Use `bun run <script>` instead of `npm run <script>` or `yarn run <script>` or `pnpm run <script>`
-- Use `bunx <package> <command>` instead of `npx <package> <command>`
+- Use `bun run <script>` instead of `npm run <script>`
+- Use `bunx <package>` instead of `npx <package>`
 - Bun automatically loads .env, so don't use dotenv.
+- Use `Bun.serve()` (not express), `Bun.file` (not node:fs readFile/writeFile)
+- Use HTML imports with `Bun.serve()` (not vite)
+- Run dev server: `bun --hot ./src/index.ts`
 
-## APIs
+## Project Overview
 
-- `Bun.serve()` supports WebSockets, HTTPS, and routes. Don't use `express`.
-- `bun:sqlite` for SQLite. Don't use `better-sqlite3`.
-- `Bun.redis` for Redis. Don't use `ioredis`.
-- `Bun.sql` for Postgres. Don't use `pg` or `postgres.js`.
-- `WebSocket` is built-in. Don't use `ws`.
-- Prefer `Bun.file` over `node:fs`'s readFile/writeFile
-- Bun.$`ls` instead of execa.
+Geocities-maximalist, all-pink Windows 95-themed artist portfolio for zapychan. Built with React 19, react95, and styled-components on Bun.
 
-## Testing
+## Architecture
 
-Use `bun test` to run tests.
-
-```ts#index.test.ts
-import { test, expect } from "bun:test";
-
-test("hello world", () => {
-  expect(1).toBe(1);
-});
+```
+src/
+  index.html              # Entry HTML
+  index.ts                # Bun.serve() - routes /, /api/hits, /gallery/*
+  frontend.tsx             # React root + ThemeProvider
+  App.tsx                  # Root component
+  styles/
+    GlobalStyles.ts        # Global CSS, fonts, cursors, evil mode styles
+    theme.ts               # react95 pink theme + evil bruised-pink theme
+  hooks/
+    useWindowManager.tsx   # Window state context + useReducer (open/close/focus/minimize/move)
+    useIsMobile.ts         # Responsive breakpoint hook (768px)
+    useEasterEgg.ts        # Hidden icon discovery + localStorage persistence
+    useEvilMode.tsx        # Evil mode context + localStorage persistence
+  components/
+    desktop/
+      Desktop.tsx          # Main layout: wallpaper, icons, windows, taskbar
+      DesktopIcon.tsx      # Double-click to open window
+      Taskbar.tsx          # Bottom bar: Start button, window list, clock
+      StartMenu.tsx        # Navigation + evil mode toggle
+    window/
+      ManagedWindow.tsx    # Draggable win95 window (fullscreen on mobile)
+      windowRegistry.ts    # Maps component keys to React components
+    gallery/
+      GalleryWindow.tsx    # Gallery shell with toolbar (View/Sort) + grid
+      GalleryGrid.tsx      # 3-col (desktop) / 2-col (mobile) CSS grid of thumbnails
+      ArtworkViewer.tsx    # Full image view with metadata
+    pages/
+      AboutWindow.tsx      # About me page
+      GuestbookWindow.tsx  # Fake guestbook with entries (+ evil entries)
+      LinksWindow.tsx      # Cool links page
+      ContactWindow.tsx    # Contact/commissions info
+      SecretVideosWindow.tsx  # YouTube videos (easter egg reward)
+    decorative/
+      Marquee.tsx          # CSS-animated scrolling welcome text
+      Sparkles.tsx         # Random sparkle animations on desktop
+      HitCounter.tsx       # Retro visitor counter (fetches /api/hits)
+      CursorTrail.tsx      # Sparkle trail following mouse (desktop only)
+    evil/
+      GlitchOverlay.tsx    # Scanlines + screen tear CSS effects
+      GlitchText.tsx       # Zalgo text corruption
+      EvilTransition.tsx   # Flicker/static animation on mode switch
+  data/
+    paintings.ts           # Painting artwork metadata (placeholder data)
+    digitalWorks.ts        # Digital artwork metadata (12 real MS Paint works + evil-only entries)
+    videos.ts              # YouTube video list (easter egg)
+    desktopIcons.ts        # Desktop icon configs
+    guestbookEntries.ts    # Fake guestbook entries (normal + evil-only)
+public/
+  gallery/
+    digital/
+      full/               # Original MS Paint artworks (filenames have spaces)
+      thumbs/             # 300px thumbnails (slugified filenames, generated with sips -Z 300)
+    paintings/
+      full/               # (placeholder — no real images yet)
+      thumbs/             # (placeholder — no real images yet)
 ```
 
-## Frontend
+## Key Patterns
 
-Use HTML imports with `Bun.serve()`. Don't use `vite`. HTML imports fully support React, CSS, Tailwind.
-
-Server:
-
-```ts#index.ts
-import index from "./index.html"
-
-Bun.serve({
-  routes: {
-    "/": index,
-    "/api/users/:id": {
-      GET: (req) => {
-        return new Response(JSON.stringify({ id: req.params.id }));
-      },
-    },
-  },
-  // optional websocket support
-  websocket: {
-    open: (ws) => {
-      ws.send("Hello, world!");
-    },
-    message: (ws, message) => {
-      ws.send(message);
-    },
-    close: (ws) => {
-      // handle close
-    }
-  },
-  development: {
-    hmr: true,
-    console: true,
-  }
-})
-```
-
-HTML files can import .tsx, .jsx or .js files directly and Bun's bundler will transpile & bundle automatically. `<link>` tags can point to stylesheets and Bun's CSS bundler will bundle.
-
-```html#index.html
-<html>
-  <body>
-    <h1>Hello, world!</h1>
-    <script type="module" src="./frontend.tsx"></script>
-  </body>
-</html>
-```
-
-With the following `frontend.tsx`:
-
-```tsx#frontend.tsx
-import React from "react";
-import { createRoot } from "react-dom/client";
-
-// import .css files directly and it works
-import './index.css';
-
-const root = createRoot(document.body);
-
-export default function Frontend() {
-  return <h1>Hello, world!</h1>;
-}
-
-root.render(<Frontend />);
-```
-
-Then, run index.ts
-
-```sh
-bun --hot ./index.ts
-```
-
-For more information, read the Bun API docs in `node_modules/bun-types/docs/**.mdx`.
+- **Window management**: useReducer in useWindowManager.tsx dispatches OPEN/CLOSE/FOCUS/MINIMIZE/MOVE actions. Windows registered in windowRegistry.ts.
+- **Flexbox scroll chain**: StyledWindow (flex column, explicit height, overflow: hidden) > ContentWrapper (flex: 1, min-height: 0) > inner scroll containers (overflow-y: auto, flex: 1, min-height: 0). Every flex container in the chain needs `min-height: 0` to allow shrinking.
+- **Static file serving**: Gallery images served via explicit `/gallery/*` route with `decodeURIComponent()` for filenames with spaces. The `fetch()` handler serves index.html as fallback for client-side routing. Do NOT use `"/*"` in routes — it intercepts all requests.
+- **Evil mode**: Context-based toggle. Components read `isEvil` from useEvilMode. Evil-only gallery items have `evilOnly: true`. Theme swaps to desaturated bruised-pink palette.
+- **Mobile**: Breakpoint at 768px. Windows go fullscreen, icons hidden (Start Menu for nav), gallery grid 2-col, no drag/cursor trail.
+- **Thumbnails**: Generate with `sips -Z 300 <input> --out <output>` on macOS. Slugify filenames (spaces to hyphens, lowercase).
