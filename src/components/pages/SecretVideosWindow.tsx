@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Anchor, Frame } from "react95";
+import { Mplayer11 } from "@react95/icons";
 import { videos } from "../../data/videos";
 
 const Wrapper = styled.div`
@@ -64,7 +65,7 @@ const VideoDesc = styled.div`
 export function SecretVideosWindow() {
   return (
     <Wrapper>
-      <Title>🎬 Secret Videos!! 🎬</Title>
+      <Title><Mplayer11 variant="16x16_4" style={{ verticalAlign: "middle", marginRight: 4 }} /> Secret Videos!! <Mplayer11 variant="16x16_4" style={{ verticalAlign: "middle", marginLeft: 4 }} /></Title>
       <Subtitle>
         ~*~ you found the secret stash!! don't tell anyone~ ~*~
       </Subtitle>

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Anchor } from "react95";
+import { Globe } from "@react95/icons";
 
 const Wrapper = styled.div`
   padding: 16px;
@@ -53,7 +54,7 @@ const LinkItem = styled.li`
 export function LinksWindow() {
   return (
     <Wrapper>
-      <Title>🔗 Cool Links 🔗</Title>
+      <Title><Globe variant="16x16_4" style={{ verticalAlign: "middle", marginRight: 4 }} /> Cool Links <Globe variant="16x16_4" style={{ verticalAlign: "middle", marginLeft: 4 }} /></Title>
       <Divider>♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥</Divider>
 
       <LinkSection>

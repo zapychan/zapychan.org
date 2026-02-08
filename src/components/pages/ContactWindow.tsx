@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Anchor, Frame } from "react95";
+import { Mail } from "@react95/icons";
 
 const Wrapper = styled.div`
   padding: 16px;
@@ -64,7 +65,7 @@ const StatusBadge = styled.span<{ $open: boolean }>`
 export function ContactWindow() {
   return (
     <Wrapper>
-      <Title>💌 Contact Me 💌</Title>
+      <Title><Mail variant="16x16_4" style={{ verticalAlign: "middle", marginRight: 4 }} /> Contact Me <Mail variant="16x16_4" style={{ verticalAlign: "middle", marginLeft: 4 }} /></Title>
       <Divider>♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥</Divider>
 
       <InfoBox variant="well">
