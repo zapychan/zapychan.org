@@ -22,8 +22,9 @@ const StyledWindow = styled(Window)<{
     top: 0;
     left: 0;
     width: 100vw;
-    height: calc(100vh - 40px);
+    height: calc(100vh - 48px);
     max-width: 100vw;
+    border: none;
   `
       : `
     top: ${$y}px;
@@ -132,14 +133,20 @@ export function ManagedWindow({ windowState, children }: ManagedWindowProps) {
       >
         <HeaderTitle>{windowState.title}</HeaderTitle>
         <HeaderButtons>
-          {!isMobile && (
-            <Button size="sm" square onClick={handleMinimize}>
-              <span style={{ fontWeight: "bold" }}>_</span>
+          {isMobile ? (
+            <Button size="sm" onClick={handleClose} style={{ minWidth: 44, minHeight: 32 }}>
+              <span style={{ fontWeight: "bold" }}>← Back</span>
             </Button>
+          ) : (
+            <>
+              <Button size="sm" square onClick={handleMinimize}>
+                <span style={{ fontWeight: "bold" }}>_</span>
+              </Button>
+              <Button size="sm" square onClick={handleClose}>
+                <span style={{ fontWeight: "bold" }}>✕</span>
+              </Button>
+            </>
           )}
-          <Button size="sm" square onClick={handleClose}>
-            <span style={{ fontWeight: "bold" }}>✕</span>
-          </Button>
         </HeaderButtons>
       </StyledHeader>
       <ContentWrapper>{children}</ContentWrapper>
