@@ -27,7 +27,7 @@ const StyledWindow = styled(Window) <{
     top: 0;
     left: 0;
     width: 100vw;
-    height: calc(100vh - 48px);
+    height: calc(100svh - 48px);
     max-width: 100vw;
     border: none;
   `
@@ -36,7 +36,7 @@ const StyledWindow = styled(Window) <{
     top: 0;
     left: 0;
     width: 100vw;
-    height: calc(100vh - 48px);
+    height: calc(100dvh - 48px);
     max-width: 100vw;
     max-height: none;
     resize: none;

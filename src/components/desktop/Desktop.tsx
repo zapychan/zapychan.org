@@ -19,7 +19,7 @@ import { EvilTransition } from "../evil/EvilTransition";
 
 const DesktopWrapper = styled.div<{ $isEvil?: boolean }>`
   width: 100vw;
-  height: 100vh;
+  height: 100svh;
   overflow: hidden;
   position: relative;
   background-color: ${({ $isEvil }) => ($isEvil ? "#bf8099" : "#ffc0cb")};
