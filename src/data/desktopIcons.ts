@@ -24,7 +24,7 @@ export const desktopIcons: DesktopIconConfig[] = [
   },
   {
     id: "about",
-    label: "About Me.txt",
+    label: "About.txt",
     windowTitle: "About Me",
     componentKey: "about",
     icon: "📝",
