@@ -4,6 +4,7 @@ import { Toolbar, Button } from "react95";
 import { paintings } from "../../data/paintings";
 import { digitalWorks } from "../../data/digitalWorks";
 import { GalleryGrid } from "./GalleryGrid";
+import { useEvilMode } from "../../hooks/useEvilMode";
 
 interface GalleryWindowProps {
   windowId: string;
@@ -39,11 +40,13 @@ const Title = styled.div`
 
 export function GalleryWindow({ windowId, props }: GalleryWindowProps) {
   const galleryType = (props?.galleryType as string) || "paintings";
+  const { isEvil } = useEvilMode();
   const artworks = useMemo(
     () => (galleryType === "paintings" ? paintings : digitalWorks),
     [galleryType],
   );
 
+  const visibleCount = artworks.filter((a) => isEvil || !a.evilOnly).length;
   const title =
     galleryType === "paintings" ? "🎨 My Paintings" : "💻 Digital Works";
 
@@ -57,7 +60,7 @@ export function GalleryWindow({ windowId, props }: GalleryWindowProps) {
           Sort
         </Button>
         <Title style={{ flex: 1 }}>
-          {title} ({artworks.filter((a) => !a.evilOnly).length} works)
+          {title} ({visibleCount} works)
         </Title>
       </GalleryToolbar>
       <ContentArea>

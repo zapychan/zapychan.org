@@ -1,8 +1,10 @@
-import { Suspense, useCallback } from "react";
+import { Suspense, useCallback, useState } from "react";
 import styled from "styled-components";
-import { Hourglass } from "react95";
+import { Hourglass, Window, WindowHeader, WindowContent, Button } from "react95";
 import { useWindowManager } from "../../hooks/useWindowManager";
 import { useIsMobile } from "../../hooks/useIsMobile";
+import { useEvilMode } from "../../hooks/useEvilMode";
+import { useEasterEgg } from "../../hooks/useEasterEgg";
 import { desktopIcons } from "../../data/desktopIcons";
 import { DesktopIcon } from "./DesktopIcon";
 import { Taskbar } from "./Taskbar";
@@ -11,6 +13,8 @@ import { windowRegistry } from "../window/windowRegistry";
 import { Marquee } from "../decorative/Marquee";
 import { Sparkles } from "../decorative/Sparkles";
 import { CursorTrail } from "../decorative/CursorTrail";
+import { GlitchOverlay } from "../evil/GlitchOverlay";
+import { EvilTransition } from "../evil/EvilTransition";
 
 const DesktopWrapper = styled.div<{ $isEvil?: boolean }>`
   width: 100vw;
@@ -49,9 +53,53 @@ const LoadingFallback = styled.div`
   padding: 40px;
 `;
 
+// Hidden easter egg icon
+const HiddenIcon = styled(DesktopIcon)<{ $discovered: boolean }>`
+  position: absolute;
+  bottom: 52px;
+  right: 12px;
+  opacity: ${({ $discovered }) => ($discovered ? 0 : 0.05)};
+  transition: opacity 0.3s;
+
+  &:hover {
+    opacity: ${({ $discovered }) => ($discovered ? 0 : 0.6)};
+  }
+`;
+
+// Secret dialog
+const DialogOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100000;
+`;
+
+const DialogWindow = styled(Window)`
+  width: 320px;
+`;
+
+const DialogContent = styled(WindowContent)`
+  text-align: center;
+  padding: 20px;
+`;
+
 export function Desktop() {
   const { windows, openWindow } = useWindowManager();
   const isMobile = useIsMobile();
+  const { isEvil, isTransitioning } = useEvilMode();
+  const { discovered, showDialog, discover, dismissDialog } = useEasterEgg();
+  const [transitionVisible, setTransitionVisible] = useState(false);
+
+  // Show transition when isTransitioning changes
+  if (isTransitioning && !transitionVisible) {
+    setTransitionVisible(true);
+  }
 
   const handleIconOpen = useCallback(
     (id: string, title: string, componentKey: string) => {
@@ -64,12 +112,26 @@ export function Desktop() {
     [openWindow],
   );
 
-  return (
-    <DesktopWrapper>
-      <Marquee />
+  const handleSecretFound = useCallback(() => {
+    discover();
+  }, [discover]);
 
-      <Sparkles />
-      <CursorTrail />
+  const handleDialogDismiss = useCallback(() => {
+    dismissDialog();
+    openWindow("secretVideos", "Secret Videos!!", "secretVideos");
+  }, [dismissDialog, openWindow]);
+
+  return (
+    <DesktopWrapper $isEvil={isEvil}>
+      <Marquee isEvil={isEvil} />
+
+      <Sparkles isEvil={isEvil} />
+      <CursorTrail isEvil={isEvil} />
+
+      {isEvil && <GlitchOverlay />}
+      {transitionVisible && (
+        <EvilTransition onComplete={() => setTransitionVisible(false)} />
+      )}
 
       {!isMobile && (
         <IconGrid>
@@ -83,7 +145,26 @@ export function Desktop() {
               }
             />
           ))}
+          {discovered && (
+            <DesktopIcon
+              label="Secret Videos"
+              icon="🎬"
+              onDoubleClick={() =>
+                openWindow("secretVideos", "Secret Videos!!", "secretVideos")
+              }
+            />
+          )}
         </IconGrid>
+      )}
+
+      {/* Hidden easter egg icon */}
+      {!isMobile && !discovered && (
+        <HiddenIcon
+          $discovered={false}
+          label="???"
+          icon="🔮"
+          onDoubleClick={handleSecretFound}
+        />
       )}
 
       <WindowLayer>
@@ -105,6 +186,33 @@ export function Desktop() {
           );
         })}
       </WindowLayer>
+
+      {/* Secret discovery dialog */}
+      {showDialog && (
+        <DialogOverlay onClick={handleDialogDismiss}>
+          <DialogWindow onClick={(e: React.MouseEvent) => e.stopPropagation()}>
+            <WindowHeader active>
+              <span style={{ fontWeight: "bold" }}>✨ Secret Found!! ✨</span>
+            </WindowHeader>
+            <DialogContent>
+              <div style={{ fontSize: 40, margin: "12px 0" }}>🎉✨🔮</div>
+              <p style={{ fontSize: 15, margin: "12px 0", color: "#ff1493" }}>
+                You found a secret!!
+              </p>
+              <p style={{ fontSize: 13, margin: "8px 0" }}>
+                A hidden folder has appeared on your desktop~
+              </p>
+              <Button
+                onClick={handleDialogDismiss}
+                primary
+                style={{ marginTop: 12 }}
+              >
+                Open it!! ♥
+              </Button>
+            </DialogContent>
+          </DialogWindow>
+        </DialogOverlay>
+      )}
 
       <Taskbar />
     </DesktopWrapper>

@@ -4,6 +4,7 @@ import { Button } from "react95";
 import type { Artwork } from "../../data/paintings";
 import { useWindowManager } from "../../hooks/useWindowManager";
 import { useIsMobile } from "../../hooks/useIsMobile";
+import { useEvilMode } from "../../hooks/useEvilMode";
 
 interface GalleryGridProps {
   artworks: Artwork[];
@@ -85,11 +86,12 @@ export function GalleryGrid({ artworks, windowId }: GalleryGridProps) {
   const [page, setPage] = useState(1);
   const { openWindow } = useWindowManager();
   const isMobile = useIsMobile();
+  const { isEvil } = useEvilMode();
 
-  // Filter out evil-only works in normal mode (evil mode will override this)
+  // Show evil-only works only in evil mode
   const visibleWorks = useMemo(
-    () => artworks.filter((a) => !a.evilOnly),
-    [artworks],
+    () => artworks.filter((a) => isEvil || !a.evilOnly),
+    [artworks, isEvil],
   );
 
   const displayedWorks = useMemo(
@@ -132,8 +134,10 @@ export function GalleryGrid({ artworks, windowId }: GalleryGridProps) {
                 // Replace broken images with emoji placeholder
                 const target = e.target as HTMLImageElement;
                 target.style.display = "none";
-                target.parentElement!.textContent =
-                  placeholderEmojis[i % placeholderEmojis.length];
+                if (target.parentElement) {
+                  target.parentElement.textContent =
+                    placeholderEmojis[i % placeholderEmojis.length] ?? "🎨";
+                }
               }}
             />
           </ThumbImage>

@@ -1,6 +1,8 @@
+import { useMemo } from "react";
 import { Frame } from "react95";
 import styled from "styled-components";
 import { guestbookEntries } from "../../data/guestbookEntries";
+import { useEvilMode } from "../../hooks/useEvilMode";
 
 const Wrapper = styled.div`
   padding: 16px;
@@ -53,14 +55,22 @@ const EntryMessage = styled.p`
 `;
 
 export function GuestbookWindow() {
+  const { isEvil } = useEvilMode();
+  const entries = useMemo(
+    () => guestbookEntries.filter((e) => isEvil || !e.evilOnly),
+    [isEvil],
+  );
+
   return (
     <Wrapper>
-      <Title>📖 Guestbook 📖</Title>
+      <Title>{isEvil ? "📖 G̵u̸e̷s̶t̵b̶o̸o̵k̷ 📖" : "📖 Guestbook 📖"}</Title>
       <Subtitle>
-        ~*~ sign my guestbook!! leave a message below ~*~
+        {isEvil
+          ? "~*~ they left messages for you ~*~"
+          : "~*~ sign my guestbook!! leave a message below ~*~"}
       </Subtitle>
       <EntryList>
-        {guestbookEntries.map((entry, i) => (
+        {entries.map((entry, i) => (
           <Entry key={i} variant="well">
             <EntryHeader>
               <EntryName>{entry.name}</EntryName>
