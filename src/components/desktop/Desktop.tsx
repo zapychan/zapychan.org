@@ -8,24 +8,30 @@ import { DesktopIcon } from "./DesktopIcon";
 import { Taskbar } from "./Taskbar";
 import { ManagedWindow } from "../window/ManagedWindow";
 import { windowRegistry } from "../window/windowRegistry";
+import { Marquee } from "../decorative/Marquee";
+import { Sparkles } from "../decorative/Sparkles";
+import { CursorTrail } from "../decorative/CursorTrail";
 
-const DesktopWrapper = styled.div`
+const DesktopWrapper = styled.div<{ $isEvil?: boolean }>`
   width: 100vw;
   height: 100vh;
   overflow: hidden;
   position: relative;
-  background-color: #ffc0cb;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ctext x='15' y='35' font-size='20' opacity='0.15'%3E%E2%99%A5%3C/text%3E%3Ctext x='45' y='15' font-size='14' opacity='0.1'%3E%E2%9C%A6%3C/text%3E%3C/svg%3E");
+  background-color: ${({ $isEvil }) => ($isEvil ? "#bf8099" : "#ffc0cb")};
+  background-image: ${({ $isEvil }) =>
+    $isEvil
+      ? `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ctext x='15' y='35' font-size='20' opacity='0.08'%3E%E2%99%A5%3C/text%3E%3Ctext x='45' y='15' font-size='14' opacity='0.06'%3E%E2%9C%A6%3C/text%3E%3C/svg%3E")`
+      : `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ctext x='15' y='35' font-size='20' opacity='0.15'%3E%E2%99%A5%3C/text%3E%3Ctext x='45' y='15' font-size='14' opacity='0.1'%3E%E2%9C%A6%3C/text%3E%3C/svg%3E")`};
 `;
 
 const IconGrid = styled.div`
   position: absolute;
-  top: 12px;
+  top: 32px;
   left: 12px;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  z-index: 1;
+  z-index: 2;
 `;
 
 const WindowLayer = styled.div`
@@ -60,6 +66,11 @@ export function Desktop() {
 
   return (
     <DesktopWrapper>
+      <Marquee />
+
+      <Sparkles />
+      <CursorTrail />
+
       {!isMobile && (
         <IconGrid>
           {desktopIcons.map((icon) => (
