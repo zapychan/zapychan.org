@@ -10,6 +10,7 @@
     "gallery": "bun scripts/generate-gallery.ts"
   },
   "dependencies": {
+    "@react95/icons": "^2.2.0",
     "@types/styled-components": "^5.1.36",
     "react": "^19",
     "react-dom": "^19",

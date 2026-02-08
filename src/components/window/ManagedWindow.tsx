@@ -161,23 +161,15 @@ export function ManagedWindow({ windowState, children }: ManagedWindowProps) {
       >
         <HeaderTitle>{windowState.title}</HeaderTitle>
         <HeaderButtons>
-          {isMobile ? (
-            <Button size="sm" onClick={handleClose} style={{ minWidth: 44, minHeight: 32 }}>
-              <span style={{ fontWeight: "bold" }}>← Back</span>
-            </Button>
-          ) : (
-            <>
-              <Button size="sm" square onClick={handleMinimize}>
-                <span style={{ fontWeight: "bold", fontSize: "18px", lineHeight: 1 }}>&#x2013;</span>
-              </Button>
-              <Button size="sm" square onClick={handleMaximize}>
-                <span style={{ fontWeight: "bold", fontSize: "14px", lineHeight: 1 }}>{windowState.isMaximized ? "❐" : "▣"}</span>
-              </Button>
-              <Button size="sm" square onClick={handleClose}>
-                <span style={{ fontWeight: "bold" }}>✕</span>
-              </Button>
-            </>
-          )}
+          <Button size="sm" square onClick={handleMinimize}>
+            <span style={{ fontWeight: "bold", fontSize: "18px", lineHeight: 1 }}>&#x2013;</span>
+          </Button>
+          <Button size="sm" square onClick={handleMaximize}>
+            <span style={{ fontWeight: "bold", fontSize: "14px", lineHeight: 1 }}>{windowState.isMaximized ? "❐" : "▣"}</span>
+          </Button>
+          <Button size="sm" square onClick={handleClose}>
+            <span style={{ fontWeight: "bold" }}>✕</span>
+          </Button>
         </HeaderButtons>
       </StyledHeader>
       <ContentWrapper>{children}</ContentWrapper>

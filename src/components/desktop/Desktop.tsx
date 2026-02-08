@@ -1,6 +1,7 @@
 import { Suspense, useCallback, useState } from "react";
 import styled from "styled-components";
 import { Hourglass, Window, WindowHeader, WindowContent, Button } from "react95";
+import { Mplayer11, Shell321 } from "@react95/icons";
 import { useWindowManager } from "../../hooks/useWindowManager";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import { useEvilMode } from "../../hooks/useEvilMode";
@@ -36,6 +37,11 @@ const IconGrid = styled.div`
   flex-direction: column;
   gap: 8px;
   z-index: 2;
+
+  @media (max-width: 767px) {
+    top: 28px;
+    left: 8px;
+  }
 `;
 
 const WindowLayer = styled.div`
@@ -133,36 +139,34 @@ export function Desktop() {
         <EvilTransition onComplete={() => setTransitionVisible(false)} />
       )}
 
-      {!isMobile && (
-        <IconGrid>
-          {desktopIcons.map((icon) => (
-            <DesktopIcon
-              key={icon.id}
-              label={icon.label}
-              icon={icon.icon}
-              onDoubleClick={() =>
-                handleIconOpen(icon.id, icon.windowTitle, icon.componentKey, icon.size)
-              }
-            />
-          ))}
-          {discovered && (
-            <DesktopIcon
-              label="Secret Videos"
-              icon="🎬"
-              onDoubleClick={() =>
-                openWindow("secretVideos", "Secret Videos!!", "secretVideos")
-              }
-            />
-          )}
-        </IconGrid>
-      )}
+      <IconGrid>
+        {desktopIcons.map((icon) => (
+          <DesktopIcon
+            key={icon.id}
+            label={icon.label}
+            icon={icon.icon}
+            onDoubleClick={() =>
+              handleIconOpen(icon.id, icon.windowTitle, icon.componentKey, icon.size)
+            }
+          />
+        ))}
+        {discovered && (
+          <DesktopIcon
+            label="Secret Videos"
+            icon={<Mplayer11 variant="32x32_4" />}
+            onDoubleClick={() =>
+              openWindow("secretVideos", "Secret Videos!!", "secretVideos")
+            }
+          />
+        )}
+      </IconGrid>
 
       {/* Hidden easter egg icon */}
       {!isMobile && !discovered && (
         <HiddenIcon
           $discovered={false}
           label="???"
-          icon="🔮"
+          icon={<Shell321 variant="32x32_4" />}
           onDoubleClick={handleSecretFound}
         />
       )}
