@@ -181,16 +181,7 @@ export const ipadWorks: Artwork[] = [
     fullImage: "/gallery/ipad/full/Photo 2025-12-10, 4 15 10 PM.jpg",
     date: "2025-12-10",
   },
-  {
-    id: "ip21",
-    title: "Photo 2025-12-15, 2 23 27 PM (1)",
-    year: 2025,
-    medium: "iPad",
-    thumbnail: "/gallery/ipad/thumbs/photo-2025-12-15-2-23-27-pm-1.jpg",
-    fullImage: "/gallery/ipad/full/Photo 2025-12-15, 2 23 27 PM (1).jpg",
-    date: "2025-12-15",
-  },
-  {
+{
     id: "ip22",
     title: "Photo 2025-12-15, 2 23 27 PM",
     year: 2025,
