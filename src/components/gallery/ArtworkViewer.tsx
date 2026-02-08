@@ -13,6 +13,9 @@ const Wrapper = styled.div`
   align-items: center;
   padding: 16px;
   gap: 16px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
 `;
 
 const ImageContainer = styled.div`

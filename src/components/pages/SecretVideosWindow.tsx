@@ -4,6 +4,9 @@ import { videos } from "../../data/videos";
 
 const Wrapper = styled.div`
   padding: 16px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
 `;
 
 const Title = styled.h2`

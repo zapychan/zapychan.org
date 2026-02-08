@@ -3,6 +3,9 @@ import { Anchor, Frame } from "react95";
 
 const Wrapper = styled.div`
   padding: 16px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
 `;
 
 const Title = styled.h2`

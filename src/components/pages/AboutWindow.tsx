@@ -3,6 +3,9 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   padding: 16px;
   line-height: 1.6;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
 `;
 
 const Title = styled.h2`

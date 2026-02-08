@@ -14,7 +14,8 @@ interface GalleryWindowProps {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
+  flex: 1;
+  min-height: 0;
 `;
 
 const GalleryToolbar = styled(Toolbar)`
@@ -26,6 +27,7 @@ const GalleryToolbar = styled(Toolbar)`
 
 const ContentArea = styled.div`
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
   padding: 8px;
 `;

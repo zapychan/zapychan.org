@@ -9,13 +9,15 @@ interface ManagedWindowProps {
   children: ReactNode;
 }
 
-const StyledWindow = styled(Window)<{
+const StyledWindow = styled(Window) <{
   $isMobile: boolean;
   $x: number;
   $y: number;
   $zIndex: number;
 }>`
   position: ${({ $isMobile }) => ($isMobile ? "fixed" : "absolute")};
+  display: flex;
+  flex-direction: column;
   ${({ $isMobile, $x, $y }) =>
     $isMobile
       ? `
@@ -30,11 +32,12 @@ const StyledWindow = styled(Window)<{
     top: ${$y}px;
     left: ${$x}px;
     width: 600px;
+    height: 600px;
     min-height: 300px;
     max-width: calc(100vw - 20px);
     max-height: calc(100vh - 60px);
     resize: both;
-    overflow: auto;
+    overflow: hidden;
   `}
   z-index: ${({ $zIndex }) => $zIndex};
 `;
@@ -67,9 +70,11 @@ const HeaderButtons = styled.div`
 `;
 
 const ContentWrapper = styled(WindowContent)`
-  height: calc(100% - 33px);
-  overflow-y: auto;
-  overflow-x: hidden;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 `;
 
 export function ManagedWindow({ windowState, children }: ManagedWindowProps) {

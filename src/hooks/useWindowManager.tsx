@@ -19,22 +19,22 @@ export interface WindowState {
 
 type Action =
   | {
-      type: "OPEN_WINDOW";
-      payload: {
-        id: string;
-        title: string;
-        componentKey: string;
-        props?: Record<string, unknown>;
-      };
-    }
+    type: "OPEN_WINDOW";
+    payload: {
+      id: string;
+      title: string;
+      componentKey: string;
+      props?: Record<string, unknown>;
+    };
+  }
   | { type: "CLOSE_WINDOW"; payload: string }
   | { type: "FOCUS_WINDOW"; payload: string }
   | { type: "MINIMIZE_WINDOW"; payload: string }
   | { type: "RESTORE_WINDOW"; payload: string }
   | {
-      type: "MOVE_WINDOW";
-      payload: { id: string; position: { x: number; y: number } };
-    };
+    type: "MOVE_WINDOW";
+    payload: { id: string; position: { x: number; y: number } };
+  };
 
 interface State {
   windows: WindowState[];
@@ -71,7 +71,7 @@ function reducer(state: State, action: Action): State {
         title: action.payload.title,
         componentKey: action.payload.componentKey,
         position: { x: 60 + cascadeOffset * 30, y: 40 + cascadeOffset * 30 },
-        size: { width: 600, height: 450 },
+        size: { width: 600, height: 600 },
         zIndex: state.nextZIndex,
         isMinimized: false,
         props: action.payload.props,
