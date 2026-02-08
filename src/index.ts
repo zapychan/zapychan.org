@@ -17,6 +17,33 @@ const server = serve({
       },
     },
 
+    "/api/weather": {
+      async GET() {
+        try {
+          const res = await fetch(
+            "https://api.open-meteo.com/v1/forecast?latitude=40.7128&longitude=-74.006&current=temperature_2m,weather_code&temperature_unit=fahrenheit",
+          );
+          const data = await res.json();
+          return Response.json(data);
+        } catch {
+          return Response.json(
+            { error: "weather unavailable" },
+            { status: 500 },
+          );
+        }
+      },
+    },
+
+    "/images/*": async (req) => {
+      const url = new URL(req.url);
+      const filePath = path.join(publicDir, decodeURIComponent(url.pathname));
+      const file = Bun.file(filePath);
+      if (await file.exists()) {
+        return new Response(file);
+      }
+      return new Response("Not found", { status: 404 });
+    },
+
     "/gallery/*": async (req) => {
       const url = new URL(req.url);
       const filePath = path.join(publicDir, decodeURIComponent(url.pathname));
