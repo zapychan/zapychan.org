@@ -20,7 +20,7 @@ const MarqueeWrapper = styled.div`
 const MarqueeTrack = styled.div`
   display: flex;
   white-space: nowrap;
-  animation: ${scroll} 30s linear infinite;
+  animation: ${scroll} 15s linear infinite;
   color: white;
   font-size: 12px;
   font-weight: bold;
