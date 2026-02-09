@@ -11,6 +11,7 @@
     "icons": "bun scripts/generate-icons.ts"
   },
   "dependencies": {
+    "@emotion/is-prop-valid": "^1.4.0",
     "@react95/icons": "^2.2.0",
     "@types/styled-components": "^5.1.36",
     "react": "^19",
