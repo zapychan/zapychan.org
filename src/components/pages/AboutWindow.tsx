@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useWindowManager } from "../../hooks/useWindowManager";
-import type { Artwork } from "../../data/paintings";
+import type { Artwork } from "../../data/types";
 
 const Wrapper = styled.div`
   padding: 16px;

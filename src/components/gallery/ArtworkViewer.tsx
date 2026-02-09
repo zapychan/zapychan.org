@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Frame } from "react95";
-import type { Artwork } from "../../data/paintings";
+import type { Artwork } from "../../data/types";
 
 interface ArtworkViewerProps {
   windowId: string;

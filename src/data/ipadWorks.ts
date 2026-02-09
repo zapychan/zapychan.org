@@ -1,4 +1,4 @@
-import type { Artwork } from "./paintings";
+import type { Artwork } from "./types";
 
 export const ipadWorks: Artwork[] = [
   {
@@ -181,8 +181,8 @@ export const ipadWorks: Artwork[] = [
     fullImage: "/gallery/ipad/full/Photo 2025-12-10, 4 15 10 PM.jpg",
     date: "2025-12-10",
   },
-{
-    id: "ip22",
+  {
+    id: "ip21",
     title: "Photo 2025-12-15, 2 23 27 PM",
     year: 2025,
     medium: "iPad",
@@ -191,7 +191,7 @@ export const ipadWorks: Artwork[] = [
     date: "2025-12-15",
   },
   {
-    id: "ip23",
+    id: "ip22",
     title: "Photo 2025-12-16, 2 24 49 PM",
     year: 2025,
     medium: "iPad",
@@ -200,7 +200,7 @@ export const ipadWorks: Artwork[] = [
     date: "2025-12-16",
   },
   {
-    id: "ip24",
+    id: "ip23",
     title: "Photo 2025-12-17, 10 17 18 PM",
     year: 2025,
     medium: "iPad",
@@ -209,7 +209,7 @@ export const ipadWorks: Artwork[] = [
     date: "2025-12-17",
   },
   {
-    id: "ip25",
+    id: "ip24",
     title: "Photo 2025-12-17, 7 40 31 PM",
     year: 2025,
     medium: "iPad",
@@ -218,7 +218,7 @@ export const ipadWorks: Artwork[] = [
     date: "2025-12-17",
   },
   {
-    id: "ip26",
+    id: "ip25",
     title: "Photo 2025-12-17, 8 55 29 PM",
     year: 2025,
     medium: "iPad",
@@ -227,7 +227,7 @@ export const ipadWorks: Artwork[] = [
     date: "2025-12-17",
   },
   {
-    id: "ip27",
+    id: "ip26",
     title: "Photo 2025-12-20, 10 18 14 PM",
     year: 2025,
     medium: "iPad",
@@ -236,7 +236,7 @@ export const ipadWorks: Artwork[] = [
     date: "2025-12-20",
   },
   {
-    id: "ip28",
+    id: "ip27",
     title: "Photo 2025-12-26, 3 38 29 PM",
     year: 2025,
     medium: "iPad",
@@ -245,7 +245,7 @@ export const ipadWorks: Artwork[] = [
     date: "2025-12-26",
   },
   {
-    id: "ip29",
+    id: "ip28",
     title: "Photo 2026-01-21, 4 21 47 PM",
     year: 2026,
     medium: "iPad",
@@ -254,7 +254,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-01-21",
   },
   {
-    id: "ip30",
+    id: "ip29",
     title: "Photo 2026-01-30, 4 55 10 PM",
     year: 2026,
     medium: "iPad",
@@ -263,7 +263,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-01-30",
   },
   {
-    id: "ip31",
+    id: "ip30",
     title: "Photo 2026-02-06, 4 56 30 PM",
     year: 2026,
     medium: "iPad",
@@ -272,7 +272,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-06",
   },
   {
-    id: "ip32",
+    id: "ip31",
     title: "Photo 2026-02-08, 1 11 03 AM (1)",
     year: 2026,
     medium: "iPad",
@@ -281,7 +281,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip33",
+    id: "ip32",
     title: "Photo 2026-02-08, 1 11 03 AM (10)",
     year: 2026,
     medium: "iPad",
@@ -290,7 +290,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip34",
+    id: "ip33",
     title: "Photo 2026-02-08, 1 11 03 AM (12) (1)",
     year: 2026,
     medium: "iPad",
@@ -299,7 +299,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip35",
+    id: "ip34",
     title: "Photo 2026-02-08, 1 11 03 AM (12)",
     year: 2026,
     medium: "iPad",
@@ -308,7 +308,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip36",
+    id: "ip35",
     title: "Photo 2026-02-08, 1 11 03 AM (13)",
     year: 2026,
     medium: "iPad",
@@ -317,7 +317,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip37",
+    id: "ip36",
     title: "Photo 2026-02-08, 1 11 03 AM (14) (1)",
     year: 2026,
     medium: "iPad",
@@ -326,7 +326,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip38",
+    id: "ip37",
     title: "Photo 2026-02-08, 1 11 03 AM (14)",
     year: 2026,
     medium: "iPad",
@@ -335,7 +335,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip39",
+    id: "ip38",
     title: "Photo 2026-02-08, 1 11 03 AM (15)",
     year: 2026,
     medium: "iPad",
@@ -344,7 +344,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip40",
+    id: "ip39",
     title: "Photo 2026-02-08, 1 11 03 AM (16) (1)",
     year: 2026,
     medium: "iPad",
@@ -353,7 +353,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip41",
+    id: "ip40",
     title: "Photo 2026-02-08, 1 11 03 AM (16)",
     year: 2026,
     medium: "iPad",
@@ -362,7 +362,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip42",
+    id: "ip41",
     title: "Photo 2026-02-08, 1 11 03 AM (17) (1)",
     year: 2026,
     medium: "iPad",
@@ -371,7 +371,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip43",
+    id: "ip42",
     title: "Photo 2026-02-08, 1 11 03 AM (17)",
     year: 2026,
     medium: "iPad",
@@ -380,7 +380,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip44",
+    id: "ip43",
     title: "Photo 2026-02-08, 1 11 03 AM (18)",
     year: 2026,
     medium: "iPad",
@@ -389,7 +389,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip45",
+    id: "ip44",
     title: "Photo 2026-02-08, 1 11 03 AM (19) (1)",
     year: 2026,
     medium: "iPad",
@@ -398,7 +398,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip46",
+    id: "ip45",
     title: "Photo 2026-02-08, 1 11 03 AM (19)",
     year: 2026,
     medium: "iPad",
@@ -407,7 +407,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip47",
+    id: "ip46",
     title: "Photo 2026-02-08, 1 11 03 AM (2)",
     year: 2026,
     medium: "iPad",
@@ -416,7 +416,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip48",
+    id: "ip47",
     title: "Photo 2026-02-08, 1 11 03 AM (20)",
     year: 2026,
     medium: "iPad",
@@ -425,7 +425,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip49",
+    id: "ip48",
     title: "Photo 2026-02-08, 1 11 03 AM (21) (1)",
     year: 2026,
     medium: "iPad",
@@ -434,7 +434,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip50",
+    id: "ip49",
     title: "Photo 2026-02-08, 1 11 03 AM (21)",
     year: 2026,
     medium: "iPad",
@@ -443,7 +443,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip51",
+    id: "ip50",
     title: "Photo 2026-02-08, 1 11 03 AM (22)",
     year: 2026,
     medium: "iPad",
@@ -452,7 +452,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip52",
+    id: "ip51",
     title: "Photo 2026-02-08, 1 11 03 AM (23)",
     year: 2026,
     medium: "iPad",
@@ -461,7 +461,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip53",
+    id: "ip52",
     title: "Photo 2026-02-08, 1 11 03 AM (24) (1)",
     year: 2026,
     medium: "iPad",
@@ -470,7 +470,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip54",
+    id: "ip53",
     title: "Photo 2026-02-08, 1 11 03 AM (24)",
     year: 2026,
     medium: "iPad",
@@ -479,7 +479,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip55",
+    id: "ip54",
     title: "Photo 2026-02-08, 1 11 03 AM (25)",
     year: 2026,
     medium: "iPad",
@@ -488,7 +488,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip56",
+    id: "ip55",
     title: "Photo 2026-02-08, 1 11 03 AM (26)",
     year: 2026,
     medium: "iPad",
@@ -497,7 +497,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip57",
+    id: "ip56",
     title: "Photo 2026-02-08, 1 11 03 AM (27)",
     year: 2026,
     medium: "iPad",
@@ -506,7 +506,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip58",
+    id: "ip57",
     title: "Photo 2026-02-08, 1 11 03 AM (3) (1)",
     year: 2026,
     medium: "iPad",
@@ -515,7 +515,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip59",
+    id: "ip58",
     title: "Photo 2026-02-08, 1 11 03 AM (3)",
     year: 2026,
     medium: "iPad",
@@ -524,7 +524,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip60",
+    id: "ip59",
     title: "Photo 2026-02-08, 1 11 03 AM (4)",
     year: 2026,
     medium: "iPad",
@@ -533,7 +533,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip61",
+    id: "ip60",
     title: "Photo 2026-02-08, 1 11 03 AM (5)",
     year: 2026,
     medium: "iPad",
@@ -542,7 +542,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip62",
+    id: "ip61",
     title: "Photo 2026-02-08, 1 11 03 AM (6)",
     year: 2026,
     medium: "iPad",
@@ -551,7 +551,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip63",
+    id: "ip62",
     title: "Photo 2026-02-08, 1 11 03 AM (7) (1)",
     year: 2026,
     medium: "iPad",
@@ -560,7 +560,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip64",
+    id: "ip63",
     title: "Photo 2026-02-08, 1 11 03 AM (7)",
     year: 2026,
     medium: "iPad",
@@ -569,7 +569,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip65",
+    id: "ip64",
     title: "Photo 2026-02-08, 1 11 03 AM (8)",
     year: 2026,
     medium: "iPad",
@@ -578,7 +578,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip66",
+    id: "ip65",
     title: "Photo 2026-02-08, 1 11 04 AM (1)",
     year: 2026,
     medium: "iPad",
@@ -587,7 +587,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip67",
+    id: "ip66",
     title: "Photo 2026-02-08, 1 20 04 AM (1)",
     year: 2026,
     medium: "iPad",
@@ -596,7 +596,7 @@ export const ipadWorks: Artwork[] = [
     date: "2026-02-08",
   },
   {
-    id: "ip68",
+    id: "ip67",
     title: "Photo 2026-02-08, 1 20 04 AM",
     year: 2026,
     medium: "iPad",

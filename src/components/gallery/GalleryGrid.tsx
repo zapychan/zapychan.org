@@ -1,7 +1,7 @@
 import { useState, useMemo, useCallback } from "react";
 import styled from "styled-components";
 import { Button } from "react95";
-import type { Artwork } from "../../data/paintings";
+import type { Artwork } from "../../data/types";
 import type { SortOrder } from "./GalleryWindow";
 import { useWindowManager } from "../../hooks/useWindowManager";
 import { useIsMobile } from "../../hooks/useIsMobile";

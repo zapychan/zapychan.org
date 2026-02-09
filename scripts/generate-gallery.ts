@@ -39,6 +39,14 @@ const galleries: GalleryConfig[] = [
     medium: "iPad",
     idPrefix: "ip",
   },
+  {
+    fullDir: "public/gallery/paintings/full",
+    thumbDir: "public/gallery/paintings/thumbs",
+    outputFile: "src/data/paintings.ts",
+    exportName: "paintings",
+    medium: "Painting",
+    idPrefix: "p",
+  },
 ];
 
 function slugify(filename: string): string {
@@ -55,13 +63,19 @@ function slugify(filename: string): string {
 }
 
 function titleFromFilename(filename: string): string {
-  return basename(filename, extname(filename));
+  let name = basename(filename, extname(filename));
+  name = name.replace(/_\d{4}-\d{2}-\d{2}$/, "");
+  return name;
 }
 
-/** Try to extract date from "Photo YYYY-MM-DD, ..." filenames */
+/** Try to extract date from "Photo YYYY-MM-DD, ..." or "title_YYYY-MM-DD.ext" filenames */
 function dateFromFilename(filename: string): string | null {
-  const match = filename.match(/^Photo (\d{4}-\d{2}-\d{2})/);
-  return match?.[1] ?? null;
+  // iPad: "Photo YYYY-MM-DD, ..."
+  const photoMatch = filename.match(/^Photo (\d{4}-\d{2}-\d{2})/);
+  if (photoMatch) return photoMatch[1]!;
+  // General: "title_YYYY-MM-DD.ext"
+  const dateMatch = basename(filename, extname(filename)).match(/_(\d{4}-\d{2}-\d{2})$/);
+  return dateMatch?.[1] ?? null;
 }
 
 async function generateThumbnail(
@@ -91,6 +105,18 @@ async function loadExistingDates(
 
 async function processGallery(config: GalleryConfig): Promise<void> {
   console.log(`\n=== Processing ${config.exportName} ===`);
+
+  if (!(await exists(config.fullDir))) {
+    console.log(`  Directory ${config.fullDir} does not exist, writing empty data file`);
+    const lines = [
+      `import type { Artwork } from "./types";`,
+      ``,
+      `export const ${config.exportName}: Artwork[] = [];`,
+      ``,
+    ];
+    await Bun.write(config.outputFile, lines.join("\n"));
+    return;
+  }
 
   // Load existing dates so we don't lose them when file mtimes change
   const existingDates = await loadExistingDates(config.outputFile);
@@ -153,7 +179,7 @@ async function processGallery(config: GalleryConfig): Promise<void> {
 
   // Write data file
   const lines: string[] = [];
-  lines.push(`import type { Artwork } from "./paintings";`);
+  lines.push(`import type { Artwork } from "./types";`);
   lines.push(``);
   lines.push(`export const ${config.exportName}: Artwork[] = [`);
   for (const entry of entries) {

@@ -1,4 +1,4 @@
-import type { Artwork } from "./paintings";
+import type { Artwork } from "./types";
 
 export const digitalWorks: Artwork[] = [
   {
@@ -1551,6 +1551,15 @@ export const digitalWorks: Artwork[] = [
   },
   {
     id: "d173",
+    title: "woman",
+    year: 2026,
+    medium: "MS Paint Art",
+    thumbnail: "/gallery/digital/thumbs/woman.png",
+    fullImage: "/gallery/digital/full/woman.png",
+    date: "2026-02-09",
+  },
+  {
+    id: "d174",
     title: "yoar gay",
     year: 2025,
     medium: "MS Paint Art",
@@ -1559,7 +1568,7 @@ export const digitalWorks: Artwork[] = [
     date: "2025-05-20",
   },
   {
-    id: "d174",
+    id: "d175",
     title: "you didnt",
     year: 2022,
     medium: "MS Paint Art",
@@ -1568,7 +1577,7 @@ export const digitalWorks: Artwork[] = [
     date: "2022-06-25",
   },
   {
-    id: "d175",
+    id: "d176",
     title: "you tleling mea",
     year: 2025,
     medium: "MS Paint Art",
@@ -1577,7 +1586,7 @@ export const digitalWorks: Artwork[] = [
     date: "2025-05-20",
   },
   {
-    id: "d176",
+    id: "d177",
     title: "you wide eyed girls",
     year: 2025,
     medium: "MS Paint Art",
@@ -1586,7 +1595,7 @@ export const digitalWorks: Artwork[] = [
     date: "2025-04-15",
   },
   {
-    id: "d177",
+    id: "d178",
     title: "youcantbreak",
     year: 2025,
     medium: "MS Paint Art",
@@ -1595,7 +1604,7 @@ export const digitalWorks: Artwork[] = [
     date: "2025-04-14",
   },
   {
-    id: "d178",
+    id: "d179",
     title: "zappy",
     year: 2025,
     medium: "MS Paint Art",
