@@ -8,12 +8,6 @@ const Wrapper = styled.div`
   min-height: 0;
 `;
 
-const Title = styled.h2`
-  color: #ff1493;
-  margin: 0 0 12px 0;
-  font-size: 18px;
-`;
-
 const Divider = styled.div`
   text-align: center;
   margin: 12px 0;
@@ -59,7 +53,7 @@ export function AboutWindow() {
   return (
     <Wrapper>
       <ImageRow>
-        <AboutImage src="/images/zapy.png" alt="zapy" />
+        <AboutImage src="/images/zapy.jpg" alt="zapy" />
         <AboutImage src="/images/zapy2.png" alt="zapy seal drawing" />
       </ImageRow>
       <Divider>✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦</Divider>
