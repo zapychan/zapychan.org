@@ -121,7 +121,7 @@ export function StartMenu({ onClose }: StartMenuProps) {
             })
           }
         >
-          <MenuIcon><img src="/gallery/self portraits/thumbs/photo-2026-02-08-1-22-45-am-1.jpg" width={16} height={16} style={{ objectFit: "cover", objectPosition: "center 20%" }} alt="" /></MenuIcon>
+          <MenuIcon><img src="/gallery/self portraits/thumbs/wired.png" width={16} height={16} style={{ objectFit: "cover" }} alt="" /></MenuIcon>
           Self Portraits
         </StyledMenuItem>
         <Separator />
