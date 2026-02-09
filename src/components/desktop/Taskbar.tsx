@@ -45,13 +45,11 @@ const WindowButtons = styled.div`
 `;
 
 const WindowButton = styled(Button)<{ $isActive: boolean }>`
-  font-size: 13px;
   max-width: 170px;
   min-width: 70px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding: 3px 8px;
   opacity: ${({ $isActive }) => ($isActive ? 1 : 0.8)};
 `;
 
@@ -257,7 +255,6 @@ export function Taskbar() {
               key={w.id}
               $isActive={!w.isMinimized}
               active={!w.isMinimized}
-              size="sm"
               onClick={() => handleWindowButton(w.id, w.isMinimized)}
             >
               {w.title}
