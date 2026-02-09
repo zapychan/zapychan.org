@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { MenuList, MenuListItem as MenuListItemBase, Separator } from "react95";
 import styled from "styled-components";
-import { Mspaint, Pbrush1, Wangimg130, Computer } from "@react95/icons";
+import { Mspaint, Pbrush1, Wangimg130, Computer, CurvesAndColors100 } from "@react95/icons";
 import { useWindowManager } from "../../hooks/useWindowManager";
 
 interface StartMenuProps {
@@ -91,8 +91,38 @@ export function StartMenu({ onClose }: StartMenuProps) {
             })
           }
         >
-          <MenuIcon><Wangimg130 variant="32x32_4" width={16} height={16} /></MenuIcon>
+          <MenuIcon><CurvesAndColors100 variant="32x32_4" width={16} height={16} /></MenuIcon>
           iPad Art
+        </StyledMenuItem>
+        <StyledMenuItem
+          onClick={() =>
+            handleOpen("paintings", "Paintings", "gallery", {
+              galleryType: "paintings",
+            })
+          }
+        >
+          <MenuIcon><Wangimg130 variant="32x32_4" width={16} height={16} /></MenuIcon>
+          Paintings
+        </StyledMenuItem>
+        <StyledMenuItem
+          onClick={() =>
+            handleOpen("gif", "GIFs", "gallery", {
+              galleryType: "gif",
+            })
+          }
+        >
+          <MenuIcon><img src="/gallery/gif/thumbs/img-1222.gif" width={16} height={16} style={{ objectFit: "cover" }} alt="" /></MenuIcon>
+          GIFs
+        </StyledMenuItem>
+        <StyledMenuItem
+          onClick={() =>
+            handleOpen("selfPortraits", "Self Portraits", "gallery", {
+              galleryType: "selfPortraits",
+            })
+          }
+        >
+          <MenuIcon><img src="/gallery/self portraits/thumbs/photo-2026-02-08-1-22-45-am-1.jpg" width={16} height={16} style={{ objectFit: "cover", objectPosition: "center 20%" }} alt="" /></MenuIcon>
+          Self Portraits
         </StyledMenuItem>
         <StyledMenuItem
           onClick={() =>

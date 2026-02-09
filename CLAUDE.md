@@ -54,8 +54,11 @@ src/
       HitCounter.tsx       # Retro visitor counter (fetches /api/hits)
       CursorTrail.tsx      # Sparkle trail following mouse (desktop only)
   data/
-    paintings.ts           # Painting artwork metadata (placeholder data)
+    paintings.ts           # Painting artwork metadata (Acrylic on Canvas)
     digitalWorks.ts        # Digital artwork metadata (MS Paint works)
+    ipadWorks.ts           # iPad artwork metadata
+    gifWorks.ts            # Animated GIF artwork metadata
+    selfPortraits.ts       # Self portrait artwork metadata
     videos.ts              # YouTube video list (easter egg)
     desktopIcons.ts        # Desktop icon configs
     guestbookEntries.ts    # Fake guestbook entries
@@ -63,10 +66,19 @@ public/
   gallery/
     digital/
       full/               # Original MS Paint artworks (filenames have spaces)
-      thumbs/             # 300px thumbnails (slugified filenames, generated with sips -Z 300)
+      thumbs/             # 300px thumbnails (slugified filenames)
+    ipad/
+      full/               # iPad artworks
+      thumbs/             # 300px thumbnails
     paintings/
-      full/               # (placeholder — no real images yet)
-      thumbs/             # (placeholder — no real images yet)
+      full/               # Acrylic on canvas paintings
+      thumbs/             # 300px thumbnails
+    gif/
+      full/               # Animated GIF artworks
+      thumbs/             # 300px thumbnails
+    self portraits/
+      full/               # Self portrait artworks
+      thumbs/             # 300px thumbnails
 ```
 
 ## Key Patterns
@@ -75,4 +87,4 @@ public/
 - **Flexbox scroll chain**: StyledWindow (flex column, explicit height, overflow: hidden) > ContentWrapper (flex: 1, min-height: 0) > inner scroll containers (overflow-y: auto, flex: 1, min-height: 0). Every flex container in the chain needs `min-height: 0` to allow shrinking.
 - **Static file serving**: Gallery images served via explicit `/gallery/*` route with `decodeURIComponent()` for filenames with spaces. The `fetch()` handler serves index.html as fallback for client-side routing. Do NOT use `"/*"` in routes — it intercepts all requests.
 - **Mobile**: Breakpoint at 768px. Windows go fullscreen, icons hidden (Start Menu for nav), gallery grid 2-col, no drag/cursor trail.
-- **Thumbnails**: Generate with `sips -Z 300 <input> --out <output>` on macOS. Slugify filenames (spaces to hyphens, lowercase).
+- **Thumbnails**: Run `bun run scripts/generate-gallery.ts` to auto-generate thumbnails and data files. Uses sharp to resize to 300px. Filenames are slugified (spaces/special chars to hyphens, lowercase).

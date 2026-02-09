@@ -44,8 +44,24 @@ const galleries: GalleryConfig[] = [
     thumbDir: "public/gallery/paintings/thumbs",
     outputFile: "src/data/paintings.ts",
     exportName: "paintings",
-    medium: "Painting",
+    medium: "Acrylic on Canvas",
     idPrefix: "p",
+  },
+  {
+    fullDir: "public/gallery/gif/full",
+    thumbDir: "public/gallery/gif/thumbs",
+    outputFile: "src/data/gifWorks.ts",
+    exportName: "gifWorks",
+    medium: "Animated GIF",
+    idPrefix: "g",
+  },
+  {
+    fullDir: "public/gallery/self portraits/full",
+    thumbDir: "public/gallery/self portraits/thumbs",
+    outputFile: "src/data/selfPortraits.ts",
+    exportName: "selfPortraits",
+    medium: "Self Portrait",
+    idPrefix: "sp",
   },
 ];
 
@@ -82,9 +98,11 @@ async function generateThumbnail(
   fullPath: string,
   thumbPath: string
 ): Promise<void> {
-  await sharp(fullPath)
-    .resize(THUMB_SIZE, THUMB_SIZE, { fit: "inside", withoutEnlargement: true })
-    .toFile(thumbPath);
+  const isGif = extname(fullPath).toLowerCase() === ".gif";
+  const pipeline = sharp(fullPath, isGif ? { animated: true } : undefined)
+    .resize(THUMB_SIZE, THUMB_SIZE, { fit: "inside", withoutEnlargement: true });
+  if (isGif) pipeline.gif();
+  await pipeline.toFile(thumbPath);
 }
 
 /** Read existing data file and build a map of fullImage path → date */

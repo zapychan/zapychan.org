@@ -5,6 +5,8 @@ import { Mspaint, Pbrush1 } from "@react95/icons";
 import { paintings } from "../../data/paintings";
 import { digitalWorks } from "../../data/digitalWorks";
 import { ipadWorks } from "../../data/ipadWorks";
+import { gifWorks } from "../../data/gifWorks";
+import { selfPortraits } from "../../data/selfPortraits";
 import { GalleryGrid } from "./GalleryGrid";
 
 export type SortOrder = "oldest" | "newest";
@@ -53,6 +55,8 @@ export function GalleryWindow({ windowId, props }: GalleryWindowProps) {
   const artworks = useMemo(() => {
     if (galleryType === "paintings") return paintings;
     if (galleryType === "ipad") return ipadWorks;
+    if (galleryType === "gif") return gifWorks;
+    if (galleryType === "selfPortraits") return selfPortraits;
     return digitalWorks;
   }, [galleryType]);
 
@@ -60,6 +64,8 @@ export function GalleryWindow({ windowId, props }: GalleryWindowProps) {
     paintings: <><Pbrush1 variant="32x32_4" width={14} height={14} /> My Paintings</>,
     mspaint: <><Mspaint variant="16x16_4" width={14} height={14} /> MS Paint Art</>,
     ipad: <><Pbrush1 variant="32x32_4" width={14} height={14} /> iPad Art</>,
+    gif: <><Pbrush1 variant="32x32_4" width={14} height={14} /> GIFs</>,
+    selfPortraits: <><Pbrush1 variant="32x32_4" width={14} height={14} /> Self Portraits</>,
   };
   const title = titleMap[galleryType] ?? <><Pbrush1 variant="32x32_4" width={14} height={14} /> Gallery</>;
 

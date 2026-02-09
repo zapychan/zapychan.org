@@ -1,5 +1,5 @@
 import React from "react";
-import { Mspaint, Pbrush1, Wangimg130 } from "@react95/icons";
+import { Mspaint, Pbrush1, Wangimg130, CurvesAndColors100 } from "@react95/icons";
 
 export interface DesktopIconConfig {
   id: string;
@@ -23,7 +23,28 @@ export const desktopIcons: DesktopIconConfig[] = [
     label: "iPad Art",
     windowTitle: "iPad Art",
     componentKey: "gallery",
+    icon: React.createElement(CurvesAndColors100, { variant: "32x32_4", width: 42, height: 42 }),
+  },
+  {
+    id: "paintings",
+    label: "Paintings",
+    windowTitle: "Paintings",
+    componentKey: "gallery",
     icon: React.createElement(Wangimg130, { variant: "32x32_4", width: 42, height: 42 }),
+  },
+  {
+    id: "gif",
+    label: "GIFs",
+    windowTitle: "GIFs",
+    componentKey: "gallery",
+    icon: React.createElement("img", { src: "/gallery/gif/thumbs/img-1222.gif", width: 42, height: 42, style: { objectFit: "cover" as const }, alt: "" }),
+  },
+  {
+    id: "selfPortraits",
+    label: "Self Portraits",
+    windowTitle: "Self Portraits",
+    componentKey: "gallery",
+    icon: React.createElement("img", { src: "/gallery/self portraits/thumbs/photo-2026-02-08-1-22-45-am-1.jpg", width: 42, height: 42, style: { objectFit: "cover" as const, objectPosition: "center 20%" }, alt: "" }),
   },
   {
     id: "about",
