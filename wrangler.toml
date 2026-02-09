@@ -5,4 +5,4 @@ pages_build_output_dir = "dist"
 [[d1_databases]]
 binding = "DB"
 database_name = "zapychan-views"
-database_id = "a9929224-801c-4451-9336-9ff832b348fa"
+database_id = "25fbbe59-1ea5-4f18-8826-feabddd2f612"
