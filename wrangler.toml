@@ -1,3 +1,8 @@
 name = "zapychan-org"
 compatibility_date = "2025-01-20"
 pages_build_output_dir = "dist"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "zapychan-views"
+database_id = "a9929224-801c-4451-9336-9ff832b348fa"
