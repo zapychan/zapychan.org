@@ -66,8 +66,8 @@ export function GalleryWindow({ windowId, props }: GalleryWindowProps) {
     paintings: <><span style={iconStyle}><Wangimg130 variant="32x32_4" width={14} height={14} /></span> My Paintings</>,
     mspaint: <><span style={iconStyle}><Pbrush1 variant="32x32_4" width={14} height={14} /></span> MS Paint Art</>,
     ipad: <><span style={iconStyle}><CurvesAndColors100 variant="32x32_4" width={14} height={14} /></span> iPad Art</>,
-    gif: <><img src="/gallery/gif/thumbs/img-1222.gif" width={14} height={14} style={{ objectFit: "cover", ...iconStyle }} alt="" /> GIFs</>,
-    selfPortraits: <><img src="/gallery/self portraits/thumbs/wired.png" width={14} height={14} style={{ objectFit: "cover", ...iconStyle }} alt="" /> Self Portraits</>,
+    gif: <><img src="/images/icons/gif-icon.png" width={14} height={14} style={{ objectFit: "cover", ...iconStyle }} alt="" /> GIFs</>,
+    selfPortraits: <><img src="/images/icons/wired-icon.png" width={14} height={14} style={{ objectFit: "cover", ...iconStyle }} alt="" /> Self Portraits</>,
   };
   const title = titleMap[galleryType] ?? <><span style={iconStyle}><Wangimg130 variant="32x32_4" width={14} height={14} /></span> Gallery</>;
 

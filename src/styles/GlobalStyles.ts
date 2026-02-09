@@ -9,6 +9,7 @@ export const GlobalStyles = createGlobalStyle`
     src: url('https://unpkg.com/react95@4.0.0/dist/fonts/ms_sans_serif.woff2') format('woff2');
     font-weight: 400;
     font-style: normal;
+    font-display: swap;
   }
 
   @font-face {
@@ -16,6 +17,7 @@ export const GlobalStyles = createGlobalStyle`
     src: url('https://unpkg.com/react95@4.0.0/dist/fonts/ms_sans_serif_bold.woff2') format('woff2');
     font-weight: 700;
     font-style: normal;
+    font-display: swap;
   }
 
   * {

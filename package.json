@@ -7,7 +7,8 @@
     "dev": "bun --hot src/index.ts",
     "build": "bun build ./src/index.html --outdir=dist --sourcemap --target=browser --minify --define:process.env.NODE_ENV='\"production\"' --env='BUN_PUBLIC_*' && cp -r public/* dist/ && echo '/* /index.html 200' > dist/_redirects",
     "start": "NODE_ENV=production bun src/index.ts",
-    "gallery": "bun scripts/generate-gallery.ts"
+    "gallery": "bun scripts/generate-gallery.ts",
+    "icons": "bun scripts/generate-icons.ts"
   },
   "dependencies": {
     "@react95/icons": "^2.2.0",

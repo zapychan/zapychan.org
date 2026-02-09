@@ -327,7 +327,7 @@ export function Taskbar() {
     <TaskbarWrapper ref={taskbarRef}>
       <TaskbarToolbar>
         <StartButton active={startOpen} onClick={toggleStart}>
-          <img src="/images/pfp_small.png" width={22} height={22} style={{ marginRight: 4, imageRendering: "pixelated" }} alt="" /> Start
+          <img src="/images/icons/pfp-icon.png" width={22} height={22} style={{ marginRight: 4, imageRendering: "pixelated" }} alt="" /> Start
         </StartButton>
 
         <WindowButtons>

@@ -111,7 +111,7 @@ export function StartMenu({ onClose }: StartMenuProps) {
             })
           }
         >
-          <MenuIcon><img src="/gallery/gif/thumbs/img-1222.gif" width={16} height={16} style={{ objectFit: "cover" }} alt="" /></MenuIcon>
+          <MenuIcon><img src="/images/icons/gif-icon.png" width={16} height={16} style={{ objectFit: "cover" }} alt="" /></MenuIcon>
           GIFs
         </StyledMenuItem>
         <StyledMenuItem
@@ -121,7 +121,7 @@ export function StartMenu({ onClose }: StartMenuProps) {
             })
           }
         >
-          <MenuIcon><img src="/gallery/self portraits/thumbs/wired.png" width={16} height={16} style={{ objectFit: "cover" }} alt="" /></MenuIcon>
+          <MenuIcon><img src="/images/icons/wired-icon.png" width={16} height={16} style={{ objectFit: "cover" }} alt="" /></MenuIcon>
           Self Portraits
         </StyledMenuItem>
         <Separator />
@@ -136,7 +136,7 @@ export function StartMenu({ onClose }: StartMenuProps) {
         <StyledMenuItem
           onClick={() => handleOpen("about", "About Me", "about", undefined, { width: 480, height: 520 })}
         >
-          <MenuIcon><img src="/images/pfp.png" width={16} height={16} style={{ imageRendering: "pixelated" }} alt="" /></MenuIcon>
+          <MenuIcon><img src="/images/icons/pfp-icon.png" width={16} height={16} style={{ imageRendering: "pixelated" }} alt="" /></MenuIcon>
           About Me
         </StyledMenuItem>
         <Separator />
