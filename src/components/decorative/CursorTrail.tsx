@@ -16,14 +16,11 @@ const TrailContainer = styled.div`
 const TRAIL_CHARS = ["✦", "♥", "✧", "⋆", "✿", "♡", "˚", "⊹"];
 
 const TRAIL_COLORS = [
-  "#ff69b4", // hot pink
-  "#ff1493", // deep pink
-  "#ff85cb", // light hot pink
-  "#ff44aa", // vivid pink
-  "#ffb6c1", // light pink
-  "#f0f", // magenta
-  "#ff6ec7", // neon pink
-  "#e84de0", // pink-purple
+  "#fffef0", // sparkle cream
+  "#ffe0e4", // blush
+  "#ffc2d8", // light pink
+  "#ffa4cc", // soft pink
+  "#ff86c0", // medium pink
 ];
 
 export function CursorTrail() {
@@ -40,12 +37,12 @@ export function CursorTrail() {
       const container = containerRef.current;
       if (!container) return;
 
-      const count = 2 + Math.floor(Math.random() * 2); // 2-3 particles per tick
+      const count = 3 + Math.floor(Math.random() * 3); // 2-3 particles per tick
       for (let i = 0; i < count; i++) {
         const color = TRAIL_COLORS[Math.floor(Math.random() * TRAIL_COLORS.length)] ?? TRAIL_COLORS[0];
         const size = 6 + Math.random() * 8;
-        const offsetX = (Math.random() - 0.5) * 28;
-        const offsetY = (Math.random() - 0.5) * 28;
+        const offsetX = (Math.random() - 0.5) * 22;
+        const offsetY = (Math.random() - 0.5) * 22;
         const particle = document.createElement("div");
         particle.textContent = TRAIL_CHARS[Math.floor(Math.random() * TRAIL_CHARS.length)] ?? "✦";
         particle.style.cssText = `
@@ -61,7 +58,7 @@ export function CursorTrail() {
           z-index: 99998;
         `;
         container.appendChild(particle);
-        setTimeout(() => particle.remove(), 600);
+        setTimeout(() => particle.remove(), 1200);
       }
     },
     [],
