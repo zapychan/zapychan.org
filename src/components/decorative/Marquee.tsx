@@ -1,10 +1,5 @@
-import { useEffect, useState } from "react";
-import styled, { keyframes } from "styled-components";
-
-const scroll = keyframes`
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-`;
+import { useEffect, useRef, useState } from "react";
+import styled from "styled-components";
 
 const MarqueeWrapper = styled.div`
   width: 100%;
@@ -20,12 +15,17 @@ const MarqueeWrapper = styled.div`
 const MarqueeTrack = styled.div`
   display: flex;
   white-space: nowrap;
-  animation: ${scroll} 15s linear infinite;
   color: white;
   font-size: 12px;
   font-weight: bold;
   text-shadow: 1px 1px 0 #b03060;
   letter-spacing: 1px;
+  will-change: transform;
+`;
+
+const SegmentGroup = styled.div`
+  display: flex;
+  flex-shrink: 0;
 `;
 
 const Segment = styled.span`
@@ -33,8 +33,12 @@ const Segment = styled.span`
   padding: 0 4em;
 `;
 
+const SPEED = 30; // pixels per second
+
 export function Marquee() {
   const [hitCount, setHitCount] = useState<number | null>(null);
+  const groupRef = useRef<HTMLDivElement>(null);
+  const [animStyle, setAnimStyle] = useState<React.CSSProperties>({});
 
   useEffect(() => {
     fetch("/api/hits")
@@ -42,6 +46,22 @@ export function Marquee() {
       .then((d: { count: number }) => setHitCount(d.count))
       .catch(() => setHitCount(1337));
   }, []);
+
+  useEffect(() => {
+    if (!groupRef.current) return;
+    const width = groupRef.current.offsetWidth;
+    const duration = width / SPEED;
+
+    let style = document.getElementById("marquee-kf") as HTMLStyleElement | null;
+    if (!style) {
+      style = document.createElement("style");
+      style.id = "marquee-kf";
+      document.head.appendChild(style);
+    }
+    style.textContent = `@keyframes mq{0%{transform:translateX(0)}100%{transform:translateX(-${width}px)}}`;
+
+    setAnimStyle({ animation: `mq ${duration}s linear infinite` });
+  }, [hitCount]);
 
   const segments = [
     `♥ you are visitor #${hitCount ?? "..."} ♥`,
@@ -51,13 +71,22 @@ export function Marquee() {
 
   return (
     <MarqueeWrapper>
-      <MarqueeTrack>
-        {segments.map((s, i) => (
-          <Segment key={i}>{s}</Segment>
-        ))}
-        {segments.map((s, i) => (
-          <Segment key={`dup-${i}`}>{s}</Segment>
-        ))}
+      <MarqueeTrack style={animStyle}>
+        <SegmentGroup ref={groupRef}>
+          {segments.map((s, i) => (
+            <Segment key={i}>{s}</Segment>
+          ))}
+        </SegmentGroup>
+        <SegmentGroup aria-hidden>
+          {segments.map((s, i) => (
+            <Segment key={`d1-${i}`}>{s}</Segment>
+          ))}
+        </SegmentGroup>
+        <SegmentGroup aria-hidden>
+          {segments.map((s, i) => (
+            <Segment key={`d2-${i}`}>{s}</Segment>
+          ))}
+        </SegmentGroup>
       </MarqueeTrack>
     </MarqueeWrapper>
   );
