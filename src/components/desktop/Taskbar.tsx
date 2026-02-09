@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { AppBar, Toolbar, Button, Frame } from "react95";
 import styled from "styled-components";
-import { Mmsys110, Mail } from "@react95/icons";
+import { Mmsys110, Globe } from "@react95/icons";
 import { useWindowManager } from "../../hooks/useWindowManager";
 import { useEvilMode } from "../../hooks/useEvilMode";
 import { useIsMobile } from "../../hooks/useIsMobile";
@@ -190,11 +190,37 @@ export function Taskbar() {
   const isMobile = useIsMobile();
   const [startOpen, setStartOpen] = useState(false);
   const [volumeOpen, setVolumeOpen] = useState(false);
-  const [volume, setVolume] = useState(75);
+  const [volume, setVolume] = useState(0);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const time = useTime();
   const weather = useWeather();
   const taskbarRef = useRef<HTMLDivElement>(null);
   const volumeRef = useRef<HTMLDivElement>(null);
+
+  // Initialize audio element once
+  useEffect(() => {
+    const audio = new Audio("/audio/bgm.webm");
+    audio.loop = true;
+    audio.volume = 0;
+    audioRef.current = audio;
+    return () => {
+      audio.pause();
+      audio.src = "";
+    };
+  }, []);
+
+  // Sync volume and play/pause
+  const handleVolumeChange = useCallback((newVolume: number) => {
+    setVolume(newVolume);
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.volume = newVolume / 100;
+    if (newVolume > 0 && audio.paused) {
+      audio.play().catch(() => {});
+    } else if (newVolume === 0) {
+      audio.pause();
+    }
+  }, []);
 
   // Close popups on outside click
   useEffect(() => {
@@ -286,7 +312,7 @@ export function Taskbar() {
                     min="0"
                     max="100"
                     value={volume}
-                    onChange={(e) => setVolume(Number(e.target.value))}
+                    onChange={(e) => handleVolumeChange(Number(e.target.value))}
                   />
                 </VolumeSliderTrack>
                 <div style={{ fontSize: 13 }}>
@@ -296,15 +322,15 @@ export function Taskbar() {
             )}
           </TrayCell>
 
-          {/* Mail indicator */}
+          {/* Internet connected */}
           {!isMobile && (
             <TrayCell
               variant="status"
               title={
-                isEvil ? "666 unread messages" : "0 unread messages"
+                isEvil ? "connection lost" : "Internet connected"
               }
             >
-              <Mail variant="16x16_4" />
+              <Globe variant="16x16_4" />
             </TrayCell>
           )}
 

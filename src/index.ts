@@ -34,6 +34,16 @@ const server = serve({
       },
     },
 
+    "/audio/*": async (req) => {
+      const url = new URL(req.url);
+      const filePath = path.join(publicDir, decodeURIComponent(url.pathname));
+      const file = Bun.file(filePath);
+      if (await file.exists()) {
+        return new Response(file);
+      }
+      return new Response("Not found", { status: 404 });
+    },
+
     "/images/*": async (req) => {
       const url = new URL(req.url);
       const filePath = path.join(publicDir, decodeURIComponent(url.pathname));
