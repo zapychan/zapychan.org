@@ -73,6 +73,10 @@ const ToolBtn = styled(Button)`
   justify-content: center;
   font-size: 14px;
   flex-shrink: 0;
+
+  .emoji {
+    font-size: 11px;
+  }
 `;
 
 const BrushSizeSelector = styled.div<{ $isMobile: boolean }>`
@@ -259,6 +263,8 @@ const TOOL_LABELS: Record<PaintTool, string> = {
   text: "Text",
 };
 
+const EMOJI_TOOLS = new Set<PaintTool>(["pencil", "eraser", "fill", "colorPicker"]);
+
 const ALL_TOOLS: PaintTool[] = [
   "pencil",
   "eraser",
@@ -270,7 +276,7 @@ const ALL_TOOLS: PaintTool[] = [
   "text",
 ];
 
-const TEXT_SIZE_MULTIPLIER = 4;
+const TEXT_SIZE_MULTIPLIER = 6;
 
 // --- Flood fill (iterative, no recursion) ---
 
@@ -956,7 +962,7 @@ export function MSPaintWindow({ windowId: _windowId }: MSPaintWindowProps) {
               onClick={() => setTool(t)}
               title={TOOL_LABELS[t]}
             >
-              {TOOL_ICONS[t]}
+              {EMOJI_TOOLS.has(t) ? <span className="emoji">{TOOL_ICONS[t]}</span> : TOOL_ICONS[t]}
             </ToolBtn>
           ))}
           <BrushSizeSelector $isMobile={isMobile}>
