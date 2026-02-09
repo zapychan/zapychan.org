@@ -124,6 +124,7 @@ export function StartMenu({ onClose }: StartMenuProps) {
           <MenuIcon><img src="/gallery/self portraits/thumbs/photo-2026-02-08-1-22-45-am-1.jpg" width={16} height={16} style={{ objectFit: "cover", objectPosition: "center 20%" }} alt="" /></MenuIcon>
           Self Portraits
         </StyledMenuItem>
+        <Separator />
         <StyledMenuItem
           onClick={() =>
             handleOpen("paintApp", "untitled - Paint", "mspaintApp", undefined, { width: 720, height: 560 })
@@ -132,7 +133,6 @@ export function StartMenu({ onClose }: StartMenuProps) {
           <MenuIcon><Mspaint variant="16x16_4" /></MenuIcon>
           Paint
         </StyledMenuItem>
-        <Separator />
         <StyledMenuItem
           onClick={() => handleOpen("about", "About Me", "about", undefined, { width: 480, height: 520 })}
         >
