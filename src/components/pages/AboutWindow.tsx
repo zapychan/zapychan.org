@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { useWindowManager } from "../../hooks/useWindowManager";
+import type { Artwork } from "../../data/paintings";
 
 const Wrapper = styled.div`
   padding: 16px;
@@ -42,6 +44,12 @@ const AboutImage = styled.img`
   width: auto;
   border: 2px solid #ff69b4;
   object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.1s;
+
+  &:hover {
+    transform: scale(1.03);
+  }
 
   @media (max-width: 768px) {
     flex-shrink: 0;
@@ -49,12 +57,31 @@ const AboutImage = styled.img`
   }
 `;
 
+const aboutImages: Pick<Artwork, "id" | "title" | "fullImage" | "medium" | "year">[] = [
+  { id: "about-zapy", title: "zapychan", fullImage: "/images/zapy.jpg", medium: "Photo", year: 2025 },
+  { id: "about-zapy2", title: "zapychan", fullImage: "/images/zapy2.png", medium: "MS Paint", year: 2025 },
+];
+
 export function AboutWindow() {
+  const { openWindow } = useWindowManager();
+
+  const handleImageClick = (img: (typeof aboutImages)[number]) => {
+    openWindow(`artwork-${img.id}`, img.title, "artworkViewer", {
+      artwork: { ...img, thumbnail: img.fullImage },
+    });
+  };
+
   return (
     <Wrapper>
       <ImageRow>
-        <AboutImage src="/images/zapy.jpg" alt="zapy" />
-        <AboutImage src="/images/zapy2.png" alt="zapy seal drawing" />
+        {aboutImages.map((img) => (
+          <AboutImage
+            key={img.id}
+            src={img.fullImage}
+            alt={img.title}
+            onClick={() => handleImageClick(img)}
+          />
+        ))}
       </ImageRow>
       <Divider>✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦</Divider>
       <Section>
