@@ -22,6 +22,13 @@ export const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  img {
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+    pointer-events: auto;
+  }
+
   html, body, #root {
     margin: 0;
     padding: 0;
