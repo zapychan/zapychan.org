@@ -29,11 +29,6 @@ export const windowRegistry: Record<
       default: m.ArtworkViewer,
     })),
   ),
-  secretVideos: lazy(() =>
-    import("../pages/SecretVideosWindow").then((m) => ({
-      default: m.SecretVideosWindow,
-    })),
-  ),
   mspaintApp: lazy(() =>
     import("../paint/MSPaintWindow").then((m) => ({
       default: m.MSPaintWindow,

@@ -16,6 +16,7 @@
     "@types/styled-components": "^5.1.36",
     "react": "^19",
     "react-dom": "^19",
+    "react-draggable": "^4.5.0",
     "react95": "^4.0.0",
     "styled-components": "^6.3.9"
   },

@@ -1,10 +1,7 @@
-import { Suspense, useCallback } from "react";
+import { Suspense, useCallback, useState } from "react";
 import styled from "styled-components";
-import { Hourglass, Window, WindowHeader, WindowContent, Button } from "react95";
-import { Mplayer11, Shell321 } from "@react95/icons";
+import { Hourglass } from "react95";
 import { useWindowManager } from "../../hooks/useWindowManager";
-import { useIsMobile } from "../../hooks/useIsMobile";
-import { useEasterEgg } from "../../hooks/useEasterEgg";
 import { desktopIcons } from "../../data/desktopIcons";
 import { DesktopIcon } from "./DesktopIcon";
 import { Taskbar } from "./Taskbar";
@@ -13,6 +10,32 @@ import { windowRegistry } from "../window/windowRegistry";
 import { Marquee } from "../decorative/Marquee";
 import { Sparkles } from "../decorative/Sparkles";
 import { CursorTrail } from "../decorative/CursorTrail";
+
+const ICON_POSITIONS_KEY = "zapychan-icon-positions";
+
+const DEFAULT_POSITIONS: Record<string, { x: number; y: number }> = {
+  mspaint: { x: 12, y: 32 },
+  ipad: { x: 12, y: 128 },
+  paintings: { x: 12, y: 224 },
+  gif: { x: 110, y: 32 },
+  selfPortraits: { x: 110, y: 128 },
+  about: { x: 12, y: 360 },
+  paintApp: { x: 110, y: 360 },
+};
+
+function loadIconPositions(): Record<string, { x: number; y: number }> {
+  try {
+    const stored = localStorage.getItem(ICON_POSITIONS_KEY);
+    if (stored) return JSON.parse(stored);
+  } catch { }
+  return {};
+}
+
+function saveIconPositions(positions: Record<string, { x: number; y: number }>) {
+  try {
+    localStorage.setItem(ICON_POSITIONS_KEY, JSON.stringify(positions));
+  } catch { }
+}
 
 const DesktopWrapper = styled.div`
   width: 100vw;
@@ -24,18 +47,18 @@ const DesktopWrapper = styled.div`
   background-repeat: repeat;
 `;
 
-const IconGrid = styled.div`
+const IconLayer = styled.div`
   position: absolute;
-  top: 32px;
-  left: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   z-index: 2;
+  pointer-events: none;
 
-  @media (max-width: 767px) {
-    top: 28px;
-    left: 8px;
+  > * {
+    pointer-events: auto;
+    position: absolute;
   }
 `;
 
@@ -54,46 +77,22 @@ const LoadingFallback = styled.div`
   padding: 40px;
 `;
 
-// Hidden easter egg icon
-const HiddenIcon = styled(DesktopIcon) <{ $discovered: boolean }>`
-  position: absolute;
-  bottom: 52px;
-  right: 12px;
-  opacity: ${({ $discovered }) => ($discovered ? 0 : 0.05)};
-  transition: opacity 0.3s;
-
-  &:hover {
-    opacity: ${({ $discovered }) => ($discovered ? 0 : 0.6)};
-  }
-`;
-
-// Secret dialog
-const DialogOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100000;
-`;
-
-const DialogWindow = styled(Window)`
-  width: 320px;
-`;
-
-const DialogContent = styled(WindowContent)`
-  text-align: center;
-  padding: 20px;
-`;
-
 export function Desktop() {
   const { windows, openWindow } = useWindowManager();
-  const isMobile = useIsMobile();
-  const { discovered, showDialog, discover, dismissDialog } = useEasterEgg();
+  const [iconPositions, setIconPositions] = useState<Record<string, { x: number; y: number }>>(loadIconPositions);
+
+  const getPosition = useCallback(
+    (id: string) => iconPositions[id] || DEFAULT_POSITIONS[id] || { x: 12, y: 32 },
+    [iconPositions],
+  );
+
+  const handleIconDragEnd = useCallback((id: string, pos: { x: number; y: number }) => {
+    setIconPositions((prev) => {
+      const next = { ...prev, [id]: pos };
+      saveIconPositions(next);
+      return next;
+    });
+  }, []);
 
   const handleIconOpen = useCallback(
     (id: string, title: string, componentKey: string, size?: { width: number; height: number }) => {
@@ -106,14 +105,22 @@ export function Desktop() {
     [openWindow],
   );
 
-  const handleSecretFound = useCallback(() => {
-    discover();
-  }, [discover]);
-
-  const handleDialogDismiss = useCallback(() => {
-    dismissDialog();
-    openWindow("secretVideos", "Secret Videos!!", "secretVideos");
-  }, [dismissDialog, openWindow]);
+  const renderIcons = () => (
+    <>
+      {desktopIcons.map((icon) => (
+        <DesktopIcon
+          key={icon.id}
+          label={icon.label}
+          icon={icon.icon}
+          position={getPosition(icon.id)}
+          onDragEnd={(pos) => handleIconDragEnd(icon.id, pos)}
+          onDoubleClick={() =>
+            handleIconOpen(icon.id, icon.windowTitle, icon.componentKey, icon.size)
+          }
+        />
+      ))}
+    </>
+  );
 
   return (
     <DesktopWrapper>
@@ -122,37 +129,7 @@ export function Desktop() {
       <Sparkles />
       <CursorTrail />
 
-      <IconGrid>
-        {desktopIcons.map((icon) => (
-          <DesktopIcon
-            key={icon.id}
-            label={icon.label}
-            icon={icon.icon}
-            onDoubleClick={() =>
-              handleIconOpen(icon.id, icon.windowTitle, icon.componentKey, icon.size)
-            }
-          />
-        ))}
-        {discovered && (
-          <DesktopIcon
-            label="Secret Videos"
-            icon={<Mplayer11 variant="32x32_4" />}
-            onDoubleClick={() =>
-              openWindow("secretVideos", "Secret Videos!!", "secretVideos")
-            }
-          />
-        )}
-      </IconGrid>
-
-      {/* Hidden easter egg icon */}
-      {!isMobile && !discovered && (
-        <HiddenIcon
-          $discovered={false}
-          label="???"
-          icon={<Shell321 variant="32x32_4" />}
-          onDoubleClick={handleSecretFound}
-        />
-      )}
+      <IconLayer>{renderIcons()}</IconLayer>
 
       <WindowLayer>
         {windows.map((w) => {
@@ -173,33 +150,6 @@ export function Desktop() {
           );
         })}
       </WindowLayer>
-
-      {/* Secret discovery dialog */}
-      {showDialog && (
-        <DialogOverlay onClick={handleDialogDismiss}>
-          <DialogWindow onClick={(e: React.MouseEvent) => e.stopPropagation()}>
-            <WindowHeader active>
-              <span style={{ fontWeight: "bold" }}>✨ Secret Found!! ✨</span>
-            </WindowHeader>
-            <DialogContent>
-              <div style={{ fontSize: 40, margin: "12px 0" }}>🎉✨🔮</div>
-              <p style={{ fontSize: 15, margin: "12px 0", color: "#ff1493" }}>
-                You found a secret!!
-              </p>
-              <p style={{ fontSize: 13, margin: "8px 0" }}>
-                A hidden folder has appeared on your desktop~
-              </p>
-              <Button
-                onClick={handleDialogDismiss}
-                primary
-                style={{ marginTop: 12 }}
-              >
-                Open it!! ♥
-              </Button>
-            </DialogContent>
-          </DialogWindow>
-        </DialogOverlay>
-      )}
 
       <Taskbar />
     </DesktopWrapper>
