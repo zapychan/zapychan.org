@@ -120,12 +120,16 @@ export function DesktopIcon({
     if (isMobile) onDoubleClick();
   }, [isMobile, onDoubleClick]);
 
+  const positionStyle = position && isMobile
+    ? { left: position.x, top: position.y, ...style }
+    : style;
+
   const iconElement = (
     <IconWrapper
       ref={nodeRef}
       onDoubleClick={isMobile ? undefined : handleDoubleClick}
       onClick={isMobile ? handleClick : undefined}
-      style={style}
+      style={positionStyle}
       className={className}
     >
       <IconEmoji>{icon}</IconEmoji>
