@@ -2,6 +2,7 @@ import { Suspense, useCallback, useState } from "react";
 import styled from "styled-components";
 import { Hourglass } from "react95";
 import { useWindowManager } from "../../hooks/useWindowManager";
+import { useIsMobile } from "../../hooks/useIsMobile";
 import { desktopIcons } from "../../data/desktopIcons";
 import { DesktopIcon } from "./DesktopIcon";
 import { Taskbar } from "./Taskbar";
@@ -79,11 +80,14 @@ const LoadingFallback = styled.div`
 
 export function Desktop() {
   const { windows, openWindow } = useWindowManager();
+  const isMobile = useIsMobile();
   const [iconPositions, setIconPositions] = useState<Record<string, { x: number; y: number }>>(loadIconPositions);
 
   const getPosition = useCallback(
-    (id: string) => iconPositions[id] || DEFAULT_POSITIONS[id] || { x: 12, y: 32 },
-    [iconPositions],
+    (id: string) => isMobile
+      ? DEFAULT_POSITIONS[id] || { x: 12, y: 32 }
+      : iconPositions[id] || DEFAULT_POSITIONS[id] || { x: 12, y: 32 },
+    [isMobile, iconPositions],
   );
 
   const handleIconDragEnd = useCallback((id: string, pos: { x: number; y: number }) => {
