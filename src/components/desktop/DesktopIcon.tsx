@@ -133,7 +133,7 @@ export function DesktopIcon({
     </IconWrapper>
   );
 
-  if (position) {
+  if (position && !isMobile) {
     return (
       <Draggable
         nodeRef={nodeRef as React.RefObject<HTMLElement>}
