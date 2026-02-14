@@ -20,9 +20,9 @@ const DEFAULT_POSITIONS: Record<string, { x: number; y: number }> = {
   paintings: { x: 12, y: 224 },
   gif: { x: 110, y: 32 },
   selfPortraits: { x: 110, y: 128 },
-  guestbook: { x: 110, y: 224 },
+  paintApp: { x: 110, y: 224 },
   about: { x: 12, y: 360 },
-  paintApp: { x: 110, y: 360 },
+  guestbook: { x: 110, y: 360 },
 };
 
 function loadIconPositions(): Record<string, { x: number; y: number }> {

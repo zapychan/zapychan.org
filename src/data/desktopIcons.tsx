@@ -65,19 +65,19 @@ export const desktopIcons: DesktopIconConfig[] = [
     size: { width: 480, height: 520 },
   },
   {
-    id: "guestbook",
-    label: "Guestbook",
-    windowTitle: "Guestbook",
-    componentKey: "guestbook",
-    icon: <Notepad variant="32x32_4" width={42} height={42} />,
-    size: { width: 480, height: 520 },
-  },
-  {
     id: "paintApp",
     label: "Paint",
     windowTitle: "untitled - Paint",
     componentKey: "mspaintApp",
     icon: <Mspaint variant="32x32_4" width={42} height={42} />,
     size: { width: 720, height: 560 },
+  },
+  {
+    id: "guestbook",
+    label: "Guestbook",
+    windowTitle: "Guestbook",
+    componentKey: "guestbook",
+    icon: <Notepad variant="32x32_4" width={42} height={42} />,
+    size: { width: 480, height: 520 },
   },
 ];

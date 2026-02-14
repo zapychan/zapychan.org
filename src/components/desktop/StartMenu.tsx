@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { MenuList, MenuListItem as MenuListItemBase, Separator } from "react95";
 import styled from "styled-components";
-import { Mspaint, Pbrush1, Wangimg130, Computer, CurvesAndColors100 } from "@react95/icons";
+import { Mspaint, Notepad, Pbrush1, Wangimg130, Computer, CurvesAndColors100 } from "@react95/icons";
 import { useWindowManager } from "../../hooks/useWindowManager";
 
 interface StartMenuProps {
@@ -138,6 +138,12 @@ export function StartMenu({ onClose }: StartMenuProps) {
         >
           <MenuIcon><img src="/images/icons/pfp-icon.png" width={16} height={16} style={{ imageRendering: "pixelated" }} alt="" /></MenuIcon>
           About Me
+        </StyledMenuItem>
+        <StyledMenuItem
+          onClick={() => handleOpen("guestbook", "Guestbook", "guestbook", undefined, { width: 480, height: 520 })}
+        >
+          <MenuIcon><Notepad variant="16x16_4" /></MenuIcon>
+          Guestbook
         </StyledMenuItem>
         <Separator />
         <StyledMenuItem disabled>
